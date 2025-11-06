@@ -1,2 +1,3 @@
 export { useAutoClose } from './useAutoClose';
-export { UseControlledStateProps, useControlledState } from './useControlledState';
+export { useControlledState } from './useControlledState';
+export type { UseControlledStateProps } from './useControlledState';

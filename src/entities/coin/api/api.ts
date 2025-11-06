@@ -1,5 +1,5 @@
 import { CoinDTO } from '@/src/entities/coin/model/dto';
-import FetchBuilder from '@/src/shared/lib/api';
+import FetchBuilder from '@/src/shared/lib/api/Fetch';
 import { IErrorResponse, ISuccessResponse } from '@/src/shared/lib/api/model/Response';
 
 export interface CoinApi {
