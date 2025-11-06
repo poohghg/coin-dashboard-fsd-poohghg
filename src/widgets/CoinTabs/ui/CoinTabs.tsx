@@ -5,20 +5,19 @@ import CoinTabList from '@/src/widgets/CoinTabs/ui/CoinTabList';
 import CoinTabPanels from '@/src/widgets/CoinTabs/ui/CoinTabPanels';
 import React from 'react';
 
-const COIN_TABS: {
-  tabKey: CoinTabKeys;
-  label: string;
-}[] = [
-  { tabKey: 'all', label: 'All Coins' },
-  { tabKey: 'favorites', label: 'My Favorites' },
-];
+interface CoinTabsProps {
+  tabList: {
+    tabKey: CoinTabKeys;
+    label: string;
+  }[];
+}
 
-const CoinTabs = () => {
+const CoinTabs = ({ tabList }: CoinTabsProps) => {
   return (
     <Tabs className="mb-6 space-y-4" defaultKey="all">
-      <CoinTabList tabList={COIN_TABS} />
+      <CoinTabList tabList={tabList} />
       <CoinSearchBar />
-      <CoinListFetcher>{coins => <CoinTabPanels coins={coins} tabList={COIN_TABS} />}</CoinListFetcher>
+      <CoinListFetcher>{coins => <CoinTabPanels coins={coins} tabList={tabList} />}</CoinListFetcher>
     </Tabs>
   );
 };
