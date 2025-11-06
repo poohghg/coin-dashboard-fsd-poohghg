@@ -1,0 +1,1 @@
+export { BaseCoin } from './BaseCoin';
