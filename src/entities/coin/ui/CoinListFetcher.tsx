@@ -1,3 +1,4 @@
+import { CoinApiImpl } from '@/src/entities/coin/api';
 import { coinService } from '@/src/entities/coin/api/service';
 import { Coin } from '@/src/entities/coin/model/type';
 import RetryButton from '@/src/entities/coin/ui/RetryButton';
@@ -9,6 +10,12 @@ interface CoinListFetcherProps {
 
 const CoinListFetcher = async ({ children }: CoinListFetcherProps) => {
   const res = await coinService.getCoinList();
+  // const res1 = await new CoinApiImpl().fetchCoinKrwList();
+
+  console.log(res);
+  const res2 = await new CoinApiImpl().fetchCoinMarketAll();
+
+  console.log(res2);
 
   if (!res.ok) {
     if (res.status === 429) {

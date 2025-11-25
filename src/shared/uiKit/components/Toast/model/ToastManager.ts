@@ -1,7 +1,6 @@
 'use client';
 
-import { Toast } from '@/src/shared/uiKit/components';
-import { ToastType } from '@/src/shared/uiKit/components/Toast/model/type';
+import { Toast, ToastType } from '@/src/shared/uiKit/components/Toast/model/type';
 
 const DEFAULT_DELAY = 3000;
 
@@ -43,7 +42,8 @@ class Toasts {
 
   private open(type: ToastType, message: string, delay: number = DEFAULT_DELAY): string {
     const id = Date.now().toString();
-    this._toasts = [...this._toasts, { type, id, message, delay }];
+    const newToast: Toast = { type, id, message, delay };
+    this._toasts = [...this._toasts, newToast];
     this.notify();
     return id;
   }

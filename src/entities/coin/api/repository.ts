@@ -1,6 +1,6 @@
 import { Coin } from '@/src/entities/coin';
 import { CoinApi } from '@/src/entities/coin/api/api';
-import { CoinMapper } from '@/src/entities/coin/api/mapper';
+import { CoinMapper } from '@/src/entities/coin/model/mapper';
 import { IErrorResponse, ISuccessResponse } from '@/src/shared/lib/api/model/Response';
 
 export interface CoinRepository {
@@ -22,4 +22,14 @@ export class CoinRepositoryImpl implements CoinRepository {
 
     return res.toModelMap(CoinMapper.fromDTO);
   }
+
+  // async getCoinMarketAll() {
+  //   const res = await this.api.fetchCoinMarketAll();
+  //
+  //   if (!res.ok) {
+  //     return res;
+  //   }
+  //
+  //   return res.toModelMap(CoinMapper.fromMarketDTO);
+  // }
 }

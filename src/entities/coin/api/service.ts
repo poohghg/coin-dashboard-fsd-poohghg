@@ -1,6 +1,9 @@
 import { CoinApiImpl } from '@/src/entities/coin/api/api';
 import { CoinRepository, CoinRepositoryImpl } from '@/src/entities/coin/api/repository';
 
+/**
+ *
+ */
 class CoinService {
   constructor(private repository: CoinRepository) {}
 
@@ -11,4 +14,5 @@ class CoinService {
 
 const coinApiImpl = new CoinApiImpl();
 const coinRepositoryImpl = new CoinRepositoryImpl(coinApiImpl);
+
 export const coinService = new CoinService(coinRepositoryImpl);

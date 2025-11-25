@@ -1,19 +1,22 @@
 import { MergeElementProps } from '@/src/shared/model/reactElement';
 import { cn } from '@/src/shared/uiKit';
 import { useTabsContext } from '@/src/shared/uiKit/components/Tabs/Context';
-import { forwardRef, memo } from 'react';
+import { forwardRef, memo, MouseEvent } from 'react';
 
 interface TabsTriggerProps {
   tabKey: string;
   className?: string;
 }
 
-const TabsTrigger = forwardRef<HTMLButtonElement, MergeElementProps<'button', TabsTriggerProps>>(
-  ({ tabKey, className, ...props }, ref) => {
+const TabTrigger = forwardRef<HTMLButtonElement, MergeElementProps<'button', TabsTriggerProps>>(
+  ({ tabKey, className, onClick, ...props }, ref) => {
     const { selectedKey, setSelectedKey } = useTabsContext();
 
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
       setSelectedKey(tabKey);
+      if (onClick) {
+        onClick(e);
+      }
     };
 
     const isSelected = selectedKey === tabKey;
@@ -36,6 +39,6 @@ const TabsTrigger = forwardRef<HTMLButtonElement, MergeElementProps<'button', Ta
   }
 );
 
-TabsTrigger.displayName = 'TabsTrigger';
+TabTrigger.displayName = 'TabTrigger';
 
-export default memo(TabsTrigger);
+export default memo(TabTrigger);

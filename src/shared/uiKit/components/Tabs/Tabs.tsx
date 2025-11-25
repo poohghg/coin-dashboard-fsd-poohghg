@@ -6,8 +6,9 @@ import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
 
 const TabPanel = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabPanel'));
-const TabsList = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabsList'));
-const TabsTrigger = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabsTrigger'));
+const TabsList = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabList'));
+const TabTrigger = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabTrigger'));
+const TabListBar = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabListBar'));
 
 interface TabsProps {
   children: ReactNode;
@@ -29,5 +30,6 @@ Tabs.displayName = 'Tabs';
 export default Object.assign(Tabs, {
   List: TabsList,
   Panel: TabPanel,
-  Trigger: TabsTrigger,
+  Trigger: TabTrigger,
+  ListBar: TabListBar,
 });

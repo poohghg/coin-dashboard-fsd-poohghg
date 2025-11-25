@@ -1,4 +1,4 @@
-import { Coin, CoinDTO } from '@/src/entities/coin/model';
+import { Coin, CoinDTO } from '@/src/entities/coin';
 import { BaseCoin } from '@/src/entities/coin/model/domain';
 
 export class CoinMapper {
