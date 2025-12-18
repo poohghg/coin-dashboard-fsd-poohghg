@@ -1,4 +1,2 @@
-export { CoinApiImpl } from './api';
-export type { CoinApi } from './api';
-export type { CoinRepository } from './repository';
-export { CoinRepositoryImpl } from './repository';
+export { UpbitCoinApiImpl } from 'src/entities/coin/api/upbitCoinApi';
+export type { UpbitCoinApi } from 'src/entities/coin/api/upbitCoinApi';

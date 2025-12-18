@@ -1,7 +1,8 @@
 import { API_URL, IS_NODE, MOCK_API_URL, USE_MOCK } from '@/src/shared/constant';
 import { HEADER_CONTENT } from '@/src/shared/lib/api/constant/header';
-import { FetchFactory, IErrorResponse, ISuccessResponse } from '@/src/shared/lib/api/model/Response';
+import { FetchErrorResponse, FetchFactory, ISuccessResponse } from '@/src/shared/lib/api/model/Response';
 import { HeaderContentKey, HttpMethod, Params } from '@/src/shared/lib/api/model/type';
+import { HttpErrorFactory } from '@/src/shared/lib/error/BaseError';
 
 class Fetch {
   private readonly url: string;
@@ -12,24 +13,38 @@ class Fetch {
     this.init = init;
   }
 
-  public async request<S, F = null>(): Promise<ISuccessResponse<S> | IErrorResponse<F>> {
+  public async request<S>(): Promise<ISuccessResponse<S>> {
     try {
       const res = await fetch(this.url, this.init);
       const body = await res.clone().json();
       const status = res.status;
 
-      if (res.ok) {
-        const hasBodyData = body && typeof body === 'object' && body.data != null;
-        const finalData = hasBodyData ? body.data : body;
-        return FetchFactory.success<S>(status, finalData);
-      } else {
-        return FetchFactory.error<F>(status, body);
+      if (!res.ok) {
+        throw FetchFactory.error<any>(status, body);
       }
+
+      const hasBodyData = body && typeof body === 'object' && body.data != null;
+      const finalData = hasBodyData ? body.data : body;
+      return FetchFactory.success<S>(status, finalData);
     } catch (err) {
-      return FetchFactory.error<F>((err instanceof Error && (err as any).status) || 500, {
-        code: err instanceof Error ? (err as any)?.code : 'UNKNOWN',
-        message: err instanceof Error ? err.message : 'Unknown error',
-      } as F);
+      if (err instanceof FetchErrorResponse) {
+        throw HttpErrorFactory.create({
+          status: err.status,
+          message: err.data?.message,
+        });
+      }
+
+      /**
+       * 네트워크 에러, CORS, abort 등
+       */
+      if (err instanceof Error) {
+        throw HttpErrorFactory.create({
+          status: 500,
+          message: err.message,
+        });
+      }
+
+      throw err;
     }
   }
 }

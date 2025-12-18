@@ -9,4 +9,5 @@ export {
   IconArrow,
   IconStar,
   SearchBar,
+  ServerFetcher,
 } from './components';

@@ -1,13 +1,13 @@
 import { CoinDTO, CoinMarketDTO, CoinPriceDTO } from '@/src/entities/coin/model';
-import { FetchBuilder, IErrorResponse, ISuccessResponse } from '@/src/shared/lib/api';
+import { FetchBuilder, ISuccessResponse } from '@/src/shared/lib/api';
 
-export interface CoinApi {
-  fetchCoinList(): Promise<ISuccessResponse<CoinDTO[]> | IErrorResponse<null>>;
-  fetchCoinMarketAll(): Promise<ISuccessResponse<CoinMarketDTO[]> | IErrorResponse<null>>;
-  fetchCoinCurrentPrice(): Promise<ISuccessResponse<CoinPriceDTO[]> | IErrorResponse<null>>;
+export interface UpbitCoinApi {
+  fetchCoinList(): Promise<ISuccessResponse<CoinDTO[]>>;
+  fetchCoinMarketAll(): Promise<ISuccessResponse<CoinMarketDTO[]>>;
+  fetchCoinCurrentPrice(): Promise<ISuccessResponse<CoinPriceDTO[]>>;
 }
 
-export class CoinApiImpl implements CoinApi {
+export class UpbitCoinApiImpl implements UpbitCoinApi {
   async fetchCoinList() {
     const url = 'https://api.coingecko.com/api/v3/coins/markets';
     const res = await new FetchBuilder(url)

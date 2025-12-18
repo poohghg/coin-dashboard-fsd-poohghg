@@ -40,7 +40,7 @@ abstract class FetchResponse<T> implements IFetchResponse<T> {
   abstract toModelMap<U>(fn: (data: T) => U): IFetchResponse<U>;
 }
 
-class FetchSuccessResponse<S> extends FetchResponse<S> implements ISuccessResponse<S> {
+export class FetchSuccessResponse<S> extends FetchResponse<S> implements ISuccessResponse<S> {
   constructor(status: number, body: S) {
     super(status, body, true);
   }
@@ -54,7 +54,9 @@ class FetchSuccessResponse<S> extends FetchResponse<S> implements ISuccessRespon
   }
 }
 
-class FetchErrorResponse<F> extends FetchResponse<F> implements IErrorResponse<F> {
+export class FetchErrorResponse<F> extends FetchResponse<F> implements IErrorResponse<F> {
+  // status === error 객체의 name 역할을 함
+  // body === error 객체의 message 역할을 함
   constructor(status: number, body: F) {
     super(status, body, false);
   }

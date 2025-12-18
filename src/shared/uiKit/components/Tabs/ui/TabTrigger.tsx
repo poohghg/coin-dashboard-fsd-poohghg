@@ -14,6 +14,7 @@ const TabTrigger = forwardRef<HTMLButtonElement, MergeElementProps<'button', Tab
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
       setSelectedKey(tabKey);
+
       if (onClick) {
         onClick(e);
       }

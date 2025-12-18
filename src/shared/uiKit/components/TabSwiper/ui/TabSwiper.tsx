@@ -22,7 +22,6 @@ const TabbedSwiper: React.FC = () => {
     }
   };
 
-  // 3. 콘텐츠 Swiper 슬라이드 변경 시 핸들러: 현재 인덱스 업데이트
   const handleSlideChange = (swiper: SwiperCore) => {
     setActiveIndex(swiper.activeIndex);
   };

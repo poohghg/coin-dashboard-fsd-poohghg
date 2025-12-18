@@ -1,10 +1,10 @@
 import { useControlledState, UseControlledStateProps } from '@/src/shared/lib/hooks';
 import { createReactContext } from '@/src/shared/lib/reactUtils';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, SetStateAction, useMemo } from 'react';
 
 interface TabsContext {
   selectedKey: string;
-  setSelectedKey: (key: string) => void;
+  setSelectedKey: (next: SetStateAction<string>) => void;
 }
 
 const [Provider, useTabsContext] = createReactContext<TabsContext>({
