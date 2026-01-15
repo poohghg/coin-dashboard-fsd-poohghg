@@ -25,9 +25,9 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
+        <div className={'flex z-0 relative isolate'}>{children}</div>
         <ToastList />
       </body>
     </html>

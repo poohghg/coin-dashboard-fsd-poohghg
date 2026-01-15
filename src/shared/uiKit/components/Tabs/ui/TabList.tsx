@@ -5,7 +5,7 @@ interface TabsListProps {}
 
 const TabList = forwardRef<HTMLDivElement, MergeElementProps<'div', TabsListProps>>(({ className, ...props }, ref) => {
   return (
-    <div ref={ref} role="tablist" className={`relative ${className}`} {...props}>
+    <div ref={ref} role="tablist" className={`relative flex overflow-y-auto ${className}`} {...props}>
       {props.children}
     </div>
   );

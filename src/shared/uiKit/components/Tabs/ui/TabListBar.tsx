@@ -31,7 +31,7 @@ const TabListBar = ({
           }
         }
       }}
-      className={`absolute bottom-0 h-0.5 bg-indigo-600 rounded-full transition-all duration-300 ${className}`}
+      className={`absolute bottom-0 h-[3px] bg-blue-500 rounded-full transition-all duration-300 ${className}`}
       {...props}
     />
   );

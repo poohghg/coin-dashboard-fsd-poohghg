@@ -11,13 +11,14 @@ export class Formatter {
 
   /**
    * @param value 금액
+   * @param suffix 접미사 (기본값: '원')
    * @returns 포맷팅된 원화 문자열
    * @example 12345678 -> '12,345,678원'
    */
-  public static asKRWFormat(value: number): string {
+  public static asKRWFormat(value: number, suffix: string = '원'): string {
     // 원화는 소수점 없이 정수 형태로 표시 (minDecimals: 0, maxDecimals: 0)
     const formatted = this.formatNumber(value, 0, 0);
-    return `${formatted}원`;
+    return `${formatted}${suffix}`;
   }
 
   /**

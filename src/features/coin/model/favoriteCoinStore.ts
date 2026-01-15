@@ -46,6 +46,7 @@ export const useFavoriteCoinStore = create<FavoriteStoreState>()(
     {
       name: FAVORITE_STORAGE_KEY,
       storage: createJSONStorage(() => localStorage),
+      // skipHydration: true,
     }
   )
 );

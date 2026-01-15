@@ -11,30 +11,25 @@ export interface MarketEvent {
   };
 }
 
-// 코인명,현재가,전일대비(가격, 퍼센트),거래대금
 export interface Coin {
   market: string;
   korean_name: string;
   english_name: string;
   trade_price: number;
+  opening_price: number;
+  high_price: number;
+  low_price: number;
   change_price: number;
-  change_rate: number;
-  trade_volume: number;
+  change_rate: number; // 24시간 변동률
+  signed_change_rate: number; // 24시간 변동률 부호있는 값
+  trade_volume: number; // 최근 거래 수량
+  acc_trade_price_24h: number; //24시간 누적 거래 금액(거래 대금)
   change_type: CoinChangeType;
-  market_event: MarketEvent;
-  // symbol: string;
-  // name: string;
-  // price: number;
-  // image: string;
-  // change24h: number;
-  // volume24h: number;
-  // marketCap: number;
-  // formattedPrice: string;
-  // formattedChange24h: string;
-  // changeColor: string;
-  // formattedVolume24h: string;
-  // formattedMarketCap: string;
-  // marketEvent: MarketEvent;
+  isWarning: boolean;
+  isCautionPriceFluctuations: boolean;
+  isCautionTradingVolumeSoaring: boolean;
+  isCautionDepositAmountSoaring: boolean;
+  isCautionGlobalPriceDifferences: boolean;
 }
 
 export interface CoinDetail extends Coin {

@@ -1,7 +1,50 @@
+import { CoinChangeType } from '@/src/entities/coin/model/type';
 import { Formatter } from '@/src/shared/lib/formatCurrency';
 
 export class CoinViewModel {
-  static formattedPrice(price: number): string {
+  /**
+   * @param price
+   * @returns 가격을 한국 원화(KRW) 형식으로 포맷팅한 문자열 (예: "₩1,234")
+   * @example formatPrice(1234) => "₩1,234"
+   */
+
+  static formatPrice(price: number): string {
     return Formatter.asKRWFormat(price);
+  }
+
+  /**
+   * @param volume
+   * @returns 거래대금을 백만,천만,억 단위로 포맷팅한 문자열 (예: "1백만", "2천만", "3억")
+   */
+  static formatVolume(volume: number): string {
+    if (100_000_000 <= volume) {
+      const hundredMillionUnits = Formatter.asKRWNumeric(volume) / 100_000_000;
+      return Formatter.asGeneralNumber(hundredMillionUnits) + '억';
+    } else if (10_000_000 <= volume) {
+      const tenMillionUnits = Formatter.asKRWNumeric(volume) / 10_000_000;
+      return Formatter.asGeneralNumber(tenMillionUnits) + '천만';
+    } else if (1_000_000 <= volume) {
+      const millionUnits = Formatter.asKRWNumeric(volume) / 1_000_000;
+      return Formatter.asGeneralNumber(millionUnits) + '백만';
+    }
+    return Formatter.asKRWFormat(volume);
+  }
+
+  /**
+   * @param signed_change_rate 부호가 있는 변동률 (예: -0.0123)
+   * @returns 변동률을 백분율 형식으로 포맷팅한 문자열 (예: "-1.23%")
+   * @example formatChangeRate(-0.0123) => "-1.23%"
+   */
+
+  static formatChangeRate(signed_change_rate: number): string {
+    const sign = 0 <= signed_change_rate ? '+' : '';
+    const percentage = signed_change_rate * 100;
+    return `${sign}${percentage.toFixed(2)}%`;
+  }
+
+  static changeColor(type: CoinChangeType, size: number = 500): string {
+    if (type === 'RISE') return `text-red-${size}`;
+    if (type === 'FALL') return `text-blue-${size}`;
+    return `text-gray-${size}`;
   }
 }

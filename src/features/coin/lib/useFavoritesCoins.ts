@@ -1,5 +1,5 @@
 import { Coin } from '@/src/entities/coin/model';
-import { useFavoriteCoinStore } from '@/src/entities/coin/model/store/favoriteCoinStore';
+import { useFavoriteCoinStore } from '@/src/features/coin/model/favoriteCoinStore';
 import { useMemo } from 'react';
 
 export const useFavoritesCoins = (coins: Coin[]) => {

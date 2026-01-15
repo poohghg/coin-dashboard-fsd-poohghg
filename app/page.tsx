@@ -1,5 +1,1 @@
-import { redirect } from 'next/navigation';
-
-export default function Home() {
-  redirect('/coin-list');
-}
+export { HomePage as default } from '@/src/pages/home';
