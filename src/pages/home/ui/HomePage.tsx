@@ -1,11 +1,9 @@
-import { CoinRepositoryImpl } from '@/src/entities/coin';
-import HomeTabs from '@/src/pages/home/ui/HomeTabs';
+import HomeTab from '@/src/pages/home/ui/HomeTab';
 
 const CoinPage = async () => {
-  const res = await new CoinRepositoryImpl().getCoinList();
   return (
-    <div className={'w-full flex flex-col items-center px-4 py-2'}>
-      <HomeTabs />
+    <div className={'w-full flex flex-col items-center px-3 py-2'}>
+      <HomeTab />
     </div>
   );
 };

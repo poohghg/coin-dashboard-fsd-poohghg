@@ -23,7 +23,7 @@ const SearchBar = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={cn('relative mb-6', className)}>
+    <div className={cn('relative', className)}>
       <IconSearch
         className={searchIconClassName ?? 'absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-500'}
         onClick={() => inputRef.current?.focus()}

@@ -11,3 +11,7 @@ export {
   SearchBar,
   ServerFetcher,
 } from './components';
+
+export type { BaseTab } from './components';
+
+export { Spacing, Button, FilterBar } from './ui';

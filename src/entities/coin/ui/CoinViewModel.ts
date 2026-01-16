@@ -43,8 +43,8 @@ export class CoinViewModel {
   }
 
   static changeColor(type: CoinChangeType, size: number = 500): string {
-    if (type === 'RISE') return `text-red-${size}`;
-    if (type === 'FALL') return `text-blue-${size}`;
-    return `text-gray-${size}`;
+    if (type === 'RISE') return `text-red-500`;
+    if (type === 'FALL') return `text-blue-500`;
+    return `text-gray-500`;
   }
 }

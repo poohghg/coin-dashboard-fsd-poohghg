@@ -25,7 +25,7 @@ const FavoriteCoinButton = ({ coinId }: FavoriteCoinButtonProps) => {
 
   return (
     <button onClick={handleToggleFavorite} className={'cursor-pointer'}>
-      <Star className={`w-5 h-5 ${isFavorite(coinId) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+      <Star className={`w-4/5 h-4/5 ${isFavorite(coinId) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
     </button>
   );
 };
@@ -34,7 +34,7 @@ export default dynamic(() => Promise.resolve(FavoriteCoinButton), {
   ssr: false,
   loading: () => (
     <button>
-      <Star className={`w-5 h-5 text-gray-300`} />
+      <Star className={`w-4/5 h-4/5 text-gray-300`} />
     </button>
   ),
 });

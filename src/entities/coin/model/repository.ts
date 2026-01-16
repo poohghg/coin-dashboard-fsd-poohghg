@@ -2,9 +2,10 @@ import { Coin } from '@/src/entities/coin';
 import { CoinMapper } from '@/src/entities/coin/api/mapper';
 import { CoinMarketDTO } from '@/src/entities/coin/api/schema';
 import { UpbitCoinApi, UpbitCoinApiImpl } from '@/src/entities/coin/api/upbitCoinApi';
+import { HttpErrorFactory } from '@/src/shared/lib/error/BaseError';
 
 export interface CoinRepository {
-  getCoinList(): Promise<Coin[]>;
+  getCoins(): Promise<Coin[]>;
 }
 
 /**
@@ -17,7 +18,7 @@ export class CoinRepositoryImpl implements CoinRepository {
     this.api = new UpbitCoinApiImpl();
   }
 
-  async getCoinList() {
+  async getCoins() {
     const [marketsRes, pricesRes] = await Promise.all([this.api.fetchCoinMarketAll(), this.api.fetchCoinPrice()]);
 
     const marketMap = marketsRes.data.reduce((acc, market) => {
@@ -27,7 +28,15 @@ export class CoinRepositoryImpl implements CoinRepository {
 
     return pricesRes.data.map(priceDTO => {
       const marketDTO = marketMap.get(priceDTO.market);
-      return CoinMapper.toCoin(marketDTO!, priceDTO);
+
+      if (!marketDTO) {
+        throw HttpErrorFactory.create({
+          status: 500,
+          message: `Market data not found for market: ${priceDTO.market}`,
+        });
+      }
+
+      return CoinMapper.toCoin(marketDTO, priceDTO);
     });
   }
 }

@@ -5,7 +5,7 @@ import { CoinSortableField, CoinSortState } from '@/src/features/coin/model/type
 import { useMemo, useState } from 'react';
 
 export const useSortCoins = (coins: Coin[]) => {
-  const [sortState, setSortState] = useState<CoinSortState>({ field: 'price', direction: 'DESC' });
+  const [sortState, setSortState] = useState<CoinSortState>({ field: 'signed_change_rate', direction: 'DESC' });
 
   const changeSortState = (field: CoinSortableField) => {
     setSortState(prevState => {
@@ -33,5 +33,6 @@ export const useSortCoins = (coins: Coin[]) => {
     sortedCoins,
     sortState,
     changeSortState,
+    direction: sortState.direction,
   };
 };

@@ -11,6 +11,7 @@ const ServerFetcher = async <S,>({ fetcher, children, errorComponent }: SeverFet
     const res = await fetcher();
     return <>{children(res)}</>;
   } catch (error) {
+    console.log('ServerFetcher error:', error);
     // 비동기 통신 자체의 실패나 throw된 res를 상위로 전파
     // throw error;
     // 서버컴포넌트는 대체 UI를 렌더링해야하 SSR 과정 또는 클라이언트 전환시 문제가 없음

@@ -1,4 +1,4 @@
-import { Coin } from '@/src/entities/coin';
+import { Coin, CoinRepositoryImpl } from '@/src/entities/coin';
 import { CoinRepository } from '@/src/entities/coin/model/repository';
 
 /**
@@ -34,15 +34,24 @@ import { CoinRepository } from '@/src/entities/coin/model/repository';
  * Query Cache 제어
  */
 
-interface CoinUseCase {
+interface HomeUseCase {
   getCoinList(): Promise<Coin[]>;
 }
 
-export class coinService implements CoinUseCase {
+class HomeService implements HomeUseCase {
   // 여러개의 레포지토리가 들어올 수 있음.
-  constructor(private coinRepository: CoinRepository) {}
+  private coinRepository: CoinRepository;
 
-  async getCoinList() {
-    return await this.coinRepository.getCoins();
+  constructor(coinRepository: CoinRepository) {
+    this.coinRepository = coinRepository;
   }
+
+  getCoinList = async () => {
+    return await this.coinRepository
+      .getCoins()
+      .then(coins => coins.sort((a, b) => b.signed_change_rate - a.signed_change_rate));
+  };
 }
+
+const coinRepository = new CoinRepositoryImpl();
+export const homeUseCase = new HomeService(coinRepository);
