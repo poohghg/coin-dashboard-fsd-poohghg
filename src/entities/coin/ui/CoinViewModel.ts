@@ -47,4 +47,10 @@ export class CoinViewModel {
     if (type === 'FALL') return `text-blue-500`;
     return `text-gray-500`;
   }
+
+  static changeAnimationClass(type: CoinChangeType): string {
+    if (type === 'RISE') return `animate-highlight-up`;
+    if (type === 'FALL') return `animate-highlight-down`;
+    return ``;
+  }
 }

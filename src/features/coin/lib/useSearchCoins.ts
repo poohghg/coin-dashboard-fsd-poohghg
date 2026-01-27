@@ -1,13 +1,13 @@
 import { Coin } from '@/src/entities/coin/model';
-import { useSearchCoinStore } from '@/src/features/coin';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
-export const useSearchedCoins = (coins: Coin[]) => {
-  const searchQuery = useSearchCoinStore(state => state.query);
+export const useSearchCoins = (coins: Coin[]) => {
+  const [searchQuery, setQuery] = useState('');
+
   const normalizedQuery = searchQuery.trim().toLowerCase();
 
-  return useMemo(() => {
-    if (!normalizedQuery) {
+  const searchedCoins = useMemo(() => {
+    if (normalizedQuery === '') {
       return coins;
     }
 
@@ -18,4 +18,10 @@ export const useSearchedCoins = (coins: Coin[]) => {
         coin.symbol.toLowerCase().includes(normalizedQuery)
     );
   }, [coins, normalizedQuery]);
+
+  return {
+    searchedCoins,
+    searchQuery,
+    setQuery,
+  };
 };

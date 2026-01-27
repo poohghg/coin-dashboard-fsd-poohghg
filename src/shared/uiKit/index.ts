@@ -5,12 +5,11 @@ export {
   Tabs,
   SkeletonBox,
   SwitchCase,
-  IconSearch,
-  IconArrow,
-  IconStar,
   SearchBar,
   ServerFetcher,
   If,
+  SeeMoreList,
+  HighlightValue,
 } from './components';
 
 export type { BaseTab } from './components';

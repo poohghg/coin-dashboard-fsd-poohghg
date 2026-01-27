@@ -51,7 +51,6 @@ export class UpbitCoinApiImpl implements UpbitCoinApi {
    * 페어 단위 현재가 조회
    * https://api.upbit.com/v1/ticker
    */
-
   async fetchCoinPriceByMarket(market: string) {
     const url = 'https://api.upbit.com/v1/ticker';
     const res = await new FetchBuilder(url)

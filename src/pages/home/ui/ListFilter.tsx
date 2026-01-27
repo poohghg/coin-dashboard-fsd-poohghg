@@ -26,16 +26,11 @@ interface RealTimeChartFilterProps {
     field: CoinSortableField;
     direction: 'ASC' | 'DESC';
   };
-  changeSortState: (field: CoinSortableField) => void;
-  changeDirection: (direction: 'ASC' | 'DESC') => void;
+  onChangeSortState: (field: CoinSortableField) => void;
+  onChangeDirection: (direction: 'ASC' | 'DESC') => void;
 }
 
-export const ListFilter = ({ sortState, changeSortState, changeDirection }: RealTimeChartFilterProps) => {
-  const handleClickFilter = (value: CoinSortableField) => {
-    changeSortState(value);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+export const ListFilter = ({ sortState, onChangeSortState, onChangeDirection }: RealTimeChartFilterProps) => {
   return (
     <div
       className={`bg-white sticky z-10`}
@@ -46,7 +41,7 @@ export const ListFilter = ({ sortState, changeSortState, changeDirection }: Real
       <FilterBar defaultValue={sortState.field}>
         <FilterBar.Active />
         {Filters.map(({ value, label }) => (
-          <FilterBar.Button key={value} value={value} onClick={() => handleClickFilter(value)}>
+          <FilterBar.Button key={value} value={value} onClick={() => onChangeSortState(value)}>
             <span className="flex items-center gap-1">{label}</span>
           </FilterBar.Button>
         ))}
@@ -59,7 +54,7 @@ export const ListFilter = ({ sortState, changeSortState, changeDirection }: Real
               value={value}
               id={id}
               onClick={() => {
-                changeDirection(value);
+                onChangeDirection(value);
               }}
               className={'w-3 h-3'}
             />

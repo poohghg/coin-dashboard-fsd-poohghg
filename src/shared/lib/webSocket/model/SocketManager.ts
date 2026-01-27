@@ -77,7 +77,6 @@ export class SocketManager {
   };
 
   public getSnapshot = (key: string) => {
-    console.log(this.store.keys());
     return this.store.get(key) || null;
   };
 

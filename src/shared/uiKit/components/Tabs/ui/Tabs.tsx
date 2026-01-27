@@ -3,7 +3,7 @@
 import { MergeElementProps } from '@/src/shared/type/reactElement';
 import { TabsContextProvider } from '@/src/shared/uiKit/components/Tabs/Context';
 import dynamic from 'next/dynamic';
-import { ReactNode } from 'react';
+import { ElementType, ReactNode } from 'react';
 
 const TabPanel = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabPanel'));
 const TabsList = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/TabList'));
@@ -13,14 +13,17 @@ const TabListBar = dynamic(() => import('@/src/shared/uiKit/components/Tabs/ui/T
 interface TabsProps {
   children: ReactNode;
   defaultKey: string;
+  as?: ElementType;
   controlledKey?: string;
   onChange?: (key: string) => void;
 }
 
-const Tabs = ({ controlledKey, defaultKey, onChange, children, ...props }: MergeElementProps<'div', TabsProps>) => {
+const Tabs = ({ controlledKey, defaultKey, as, onChange, children, ...props }: MergeElementProps<'div', TabsProps>) => {
+  const Comp = as || 'div';
+
   return (
     <TabsContextProvider controlledValue={controlledKey} defaultValue={defaultKey} onChange={onChange}>
-      <div {...props}>{children}</div>
+      <Comp {...props}>{children}</Comp>
     </TabsContextProvider>
   );
 };

@@ -4,7 +4,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <MainHeader />
-      <main>{children}</main>
+      <main className={'flex min-h-[calc(100vh-64px)] w-full flex-col items-center'}>{children}</main>
     </>
   );
 };

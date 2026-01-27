@@ -43,7 +43,7 @@
 
 2. **`CoinTabPanels` (View Layer):**
 
-    - **`useSearchedCoins`** 훅을 사용하여 검색어에 따른 코인 리스트 필터링을 수행합니다.
+    - **`useSearchCoins`** 훅을 사용하여 검색어에 따른 코인 리스트 필터링을 수행합니다.
 
     - **`useSortCoins`** 훅을 사용하여 코인 리스트를 선택된 정렬 기준에 따라 정렬합니다.
 

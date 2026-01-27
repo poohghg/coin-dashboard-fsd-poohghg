@@ -26,8 +26,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className={'flex flex-col z-0 relative isolate max-w-[1200px] mx-auto'}>{children}</div>
+      <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
+        <div className={'relative isolate z-0 mx-auto flex max-w-[1200px] flex-col'}>{children}</div>
         <ToastList />
       </body>
     </html>
