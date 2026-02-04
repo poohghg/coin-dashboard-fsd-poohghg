@@ -56,7 +56,7 @@ export const CoinTickerSchema = z.object({
 export const CoinTickersSchema = z.array(CoinTickerSchema);
 export type CoinTickerDTO = z.infer<typeof CoinTickerSchema>;
 
-export const UpbitSocketTickerSchema = z.object({
+export const CoinDetailSocketSchema = z.object({
   type: z.literal('ticker'),
   code: z.string(),
   opening_price: z.number(),
@@ -91,7 +91,9 @@ export const UpbitSocketTickerSchema = z.object({
   timestamp: z.number(),
   stream_type: z.enum(['SNAPSHOT', 'REALTIME']),
 });
-export const UpbitSocketTickerPartialSchema = UpbitSocketTickerSchema.pick({
+export type CoinDetailSocketDTO = z.infer<typeof CoinDetailSocketSchema>;
+
+export const CoinSocketSchema = CoinDetailSocketSchema.pick({
   type: true,
   code: true,
   trade_price: true,
@@ -103,5 +105,4 @@ export const UpbitSocketTickerPartialSchema = UpbitSocketTickerSchema.pick({
   acc_trade_price: true,
   timestamp: true,
 });
-export type UpbitSocketTickerDTO = z.infer<typeof UpbitSocketTickerSchema>;
-export type UpbitSocketTickerPartialDTO = z.infer<typeof UpbitSocketTickerPartialSchema>;
+export type CoinSocketDTO = z.infer<typeof CoinSocketSchema>;

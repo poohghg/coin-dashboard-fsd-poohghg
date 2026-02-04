@@ -14,7 +14,22 @@ export const OrderbookSchema = z.object({
   orderbook_units: z.array(OrderbookUnitSchema),
 });
 export const OrderbooksSchema = z.array(OrderbookSchema);
+export const OrderbooksSocketSchema = z
+  .object({
+    type: z.literal('orderbook'),
+    code: z.string(),
+    timestamp: z.number(),
+    total_ask_size: z.number(),
+    total_bid_size: z.number(),
+    orderbook_units: z.array(OrderbookUnitSchema),
+  })
+  .transform(data => ({
+    market: data.code,
+    ...data,
+  }));
+
 export type OrderbookDTO = z.infer<typeof OrderbookSchema>;
+export type OrderbookSocketDTO = z.infer<typeof OrderbooksSocketSchema>;
 
 export const OrderbookInstrumentSchema = z.object({
   market: z.string(),

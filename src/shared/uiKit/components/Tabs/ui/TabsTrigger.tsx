@@ -31,7 +31,7 @@ const TabsTrigger = forwardRef<HTMLButtonElement, MergeElementProps<'button', Ta
         aria-selected={isSelected}
         onClick={handleClick}
         className={cn(
-          'z-1 px-4 py-2 text-[15px] font-semibold text-gray-400 transition duration-75 hover:text-blue-500 aria-selected:text-blue-600',
+          'z-1 px-3 py-1.5 text-[15px] font-semibold text-gray-400 transition duration-75 hover:text-blue-500 aria-selected:text-blue-600',
           className
         )}
         id={`tab-${tabKey}`}

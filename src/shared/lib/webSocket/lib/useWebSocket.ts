@@ -8,10 +8,10 @@ interface UseWebSocketParams {
   keyExtractor: KeyExtractor; // 메시지가 왔을 때 key을 판별하는 로직
 }
 
-export const useWebSocket = <T = any>({ url, key, keyExtractor }: UseWebSocketParams) => {
+export const useWebSocket = <T>({ url, key, keyExtractor }: UseWebSocketParams) => {
   const manager = getSocketManager(url, keyExtractor);
 
-  const data = useSyncExternalStore(
+  const data = useSyncExternalStore<T | null>(
     useCallback(onStoreChange => manager.subscribe(key, onStoreChange), [manager, key]),
     useCallback(() => manager.getSnapshot(key), [manager, key]),
     () => null
@@ -25,7 +25,7 @@ export const useWebSocket = <T = any>({ url, key, keyExtractor }: UseWebSocketPa
   );
 
   return {
-    data: data as T | null,
+    data: data,
     sendMessage,
     readyState: manager.getStatus(),
   };

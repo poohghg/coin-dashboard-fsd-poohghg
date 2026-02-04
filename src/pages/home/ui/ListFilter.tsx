@@ -1,6 +1,5 @@
-import { HEADER_SIZE } from '@/src/app/constant/size';
 import { CoinSortableField } from '@/src/features/coin';
-import { FilterBar, Label, RadioGroup, RadioGroupItem, Spacing } from '@/src/shared/uiKit';
+import { FilterBar } from '@/src/shared/uiKit';
 
 const Filters: {
   value: CoinSortableField;
@@ -32,37 +31,44 @@ interface RealTimeChartFilterProps {
 
 export const ListFilter = ({ sortState, onChangeSortState, onChangeDirection }: RealTimeChartFilterProps) => {
   return (
-    <div
-      className={`bg-white sticky z-10`}
-      style={{
-        top: `${HEADER_SIZE.LAYOUT_HEIGHT}px`,
-      }}
-    >
-      <FilterBar defaultValue={sortState.field}>
+    <div className={`top-main-header sticky z-10 flex h-[64px] justify-center bg-white`}>
+      <FilterBar defaultValue={sortState.field} className={`h-[28px]`}>
         <FilterBar.Active />
         {Filters.map(({ value, label }) => (
           <FilterBar.Button key={value} value={value} onClick={() => onChangeSortState(value)}>
-            <span className="flex items-center gap-1">{label}</span>
+            <span className="flex items-center">{label}</span>
           </FilterBar.Button>
         ))}
       </FilterBar>
-      <Spacing size={12} />
-      <RadioGroup className={'flex justify-end gap-3'} value={sortState.direction}>
-        {RadioGroupItems.map(({ value, label, id }) => (
-          <div key={value} className="flex items-center gap-1">
-            <RadioGroupItem
-              value={value}
-              id={id}
-              onClick={() => {
-                onChangeDirection(value);
-              }}
-              className={'w-3 h-3'}
-            />
-            <Label htmlFor={id}>{label}</Label>
-          </div>
-        ))}
-      </RadioGroup>
-      <Spacing size={12} />
+      {/*<div className="flex justify-end">*/}
+      {/*  <button*/}
+      {/*    className={`rounded-[6px] border border-gray-300 px-2 py-1 text-[11px] text-gray-500 ${*/}
+      {/*      sortState.direction === 'ASC' ? 'bg-gray-100 hover:bg-gray-200' : 'bg-white hover:bg-gray-50'*/}
+      {/*    } `}*/}
+      {/*    onClick={() => {*/}
+      {/*      onChangeDirection(sortState.direction === 'ASC' ? 'DESC' : 'ASC');*/}
+      {/*    }}*/}
+      {/*  >*/}
+      {/*    {sortState.direction === 'ASC' ? '오름차순' : '내림차순'}*/}
+      {/*  </button>*/}
+      {/*</div>*/}
+      {/*<RadioGroup className={'flex justify-end gap-3'} value={sortState.direction}>*/}
+      {/*  {RadioGroupItems.map(({ value, label, id }) => (*/}
+      {/*    <div key={value} className="flex items-center gap-1">*/}
+      {/*      <RadioGroupItem*/}
+      {/*        value={value}*/}
+      {/*        id={id}*/}
+      {/*        onClick={() => {*/}
+      {/*          onChangeDirection(value);*/}
+      {/*        }}*/}
+      {/*        className={'h-[11px] w-[11px]'}*/}
+      {/*      />*/}
+      {/*      <Label htmlFor={id} className={`text-[11px]`}>*/}
+      {/*        {label}*/}
+      {/*      </Label>*/}
+      {/*    </div>*/}
+      {/*  ))}*/}
+      {/*</RadioGroup>*/}
     </div>
   );
 };

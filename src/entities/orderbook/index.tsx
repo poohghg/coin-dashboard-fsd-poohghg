@@ -10,3 +10,5 @@ export {
 } from './model';
 
 export type { Orderbook, TradeSide, OrderbookUnit } from './model';
+
+export { useLiveOrderbook } from './lib';

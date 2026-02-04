@@ -1,5 +1,6 @@
-// useUpbitBase.ts
-import { upbitSubscriptionManager, UpbitType } from '@/src/entities/coin/lib/UpbitSubscriptionManager';
+'use client';
+
+import { upbitSubscriptionManager, UpbitType } from '@/src/shared/lib/upbitSocket/UpbitSubscriptionManager';
 import { useWebSocket } from '@/src/shared/lib/webSocket/lib/useWebSocket';
 import { useEffect } from 'react';
 

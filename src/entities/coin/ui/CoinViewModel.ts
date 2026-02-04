@@ -7,7 +7,6 @@ export class CoinViewModel {
    * @returns 가격을 한국 원화(KRW) 형식으로 포맷팅한 문자열 (예: "₩1,234")
    * @example formatPrice(1234) => "₩1,234"
    */
-
   private static krwFormatter = new Intl.NumberFormat('ko-KR', {
     currency: 'KRW',
     maximumSignificantDigits: 6,

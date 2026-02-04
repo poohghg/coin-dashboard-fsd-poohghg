@@ -1,7 +1,6 @@
 'use client';
 
-import { CoinDetail } from '@/src/entities/coin/model/type';
-import { CoinViewModel } from '@/src/entities/coin/ui';
+import { CoinDetail, CoinViewModel } from '@/src/entities/coin';
 import { Orderbook } from '@/src/entities/orderbook';
 import React from 'react';
 

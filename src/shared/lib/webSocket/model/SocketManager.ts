@@ -99,10 +99,7 @@ export class SocketManager {
       const key = this.keyExtractor(message);
 
       if (key) {
-        this.store.set(key, message);
-        if (this.listeners.has(key)) {
-          this.listeners.get(key)!.forEach(listener => listener());
-        }
+        this.updateStore(key, message);
       }
     } catch (e) {
       console.error('[SocketManager] Parse error:', e);
@@ -120,5 +117,12 @@ export class SocketManager {
   private cleanup() {
     this.transport.disconnect();
     removeManagerFromCache(this.url);
+  }
+
+  private updateStore(key: string, data: any) {
+    this.store.set(key, data);
+    if (this.listeners.has(key)) {
+      this.listeners.get(key)!.forEach(listener => listener());
+    }
   }
 }

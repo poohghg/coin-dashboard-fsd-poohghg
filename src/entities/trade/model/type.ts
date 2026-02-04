@@ -5,10 +5,10 @@ export interface TradeTick {
   timestamp: number;
   price: number;
   volume: number;
-  prevClosingPrice?: number;
-  changePrice?: number;
+  prevClosingPrice: number;
+  changePrice: number;
   side: TradeSide;
-  id: number; // sequential_id
+  id: number;
   tradeDateUtc: string;
   tradeTimeUtc: string;
 }

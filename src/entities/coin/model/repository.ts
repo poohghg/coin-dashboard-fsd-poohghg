@@ -33,7 +33,7 @@ export class CoinRepositoryImpl implements CoinRepository {
 
       if (!marketDTO) {
         throw HttpErrorFactory.create({
-          status: 500,
+          status: 404,
           message: `Market data not found for market: ${priceDTO.market}`,
         });
       }

@@ -1,6 +1,7 @@
 'use client';
 
 import { MergeElementProps } from '@/src/shared/type/reactElement';
+import { cn } from '@/src/shared/uiKit';
 import { Button } from '@/src/shared/uiKit/ui';
 import { FilterBarContextProvider, useFilterBarContext } from '@/src/shared/uiKit/ui/FilterBar/ui/FilterBarContext';
 import { MouseEvent, ReactNode, useEffect, useState } from 'react';
@@ -73,15 +74,13 @@ export const FilterButton = ({ children, value, ...props }: MergeElementProps<'b
   };
 
   return (
-    <Button
-      className={`z-1 inline-flex flex-grow-1 items-center justify-center rounded-[6px] px-3 text-[13px] font-bold transition-all duration-100 select-none ${isSelected ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-200/50 hover:text-gray-700'} ${className} `}
+    <button
+      className={`z-1 inline-flex flex-grow-1 items-center justify-center rounded-[6px] p-0 text-[13px] font-bold transition-all duration-100 select-none ${isSelected ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-200/50 hover:text-gray-700'} ${className} `}
       onClick={handleClick}
       value={value}
-      size={'sm'}
-      {...restProps}
     >
       {children}
-    </Button>
+    </button>
   );
 };
 
@@ -96,7 +95,10 @@ export const FilterBar = ({ children, defaultValue, onChange, className }: Filte
   return (
     <FilterBarContextProvider defaultValue={defaultValue} onChange={onChange}>
       <div
-        className={`relative flex h-8 w-full items-center gap-0 overflow-x-auto overflow-y-hidden rounded-[8px] border border-gray-200/50 bg-gray-200 px-1 ${className ?? ''} `}
+        className={cn(
+          'relative flex h-8 w-full items-center gap-0 overflow-x-auto overflow-y-hidden rounded-[8px] border border-gray-200/50 bg-gray-200 px-1',
+          className
+        )}
       >
         {children}
       </div>

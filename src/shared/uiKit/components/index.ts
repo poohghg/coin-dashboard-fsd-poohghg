@@ -8,5 +8,6 @@ export { ServerFetcher } from './ServerFetcher';
 export { If } from './If';
 export { SeeMoreList } from './SeeMoreList';
 export { HighlightValue } from './HighlightValue';
+export { ScrollIntoView } from './ScrollIntoView';
 
 export type { BaseTab } from './Tabs';

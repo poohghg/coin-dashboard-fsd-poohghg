@@ -1,3 +1,3 @@
-export const HEADER_SIZE = {
-  LAYOUT_HEIGHT: 64,
-};
+export const MAIN_LAYOUT = {
+  HEADER: 54,
+} as const;

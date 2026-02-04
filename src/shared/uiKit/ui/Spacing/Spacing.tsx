@@ -6,7 +6,7 @@ interface SpacingProps {
 }
 
 const Spacing = ({ size, className }: SpacingProps) => {
-  return <div className={cn('flex-shrink-0', className)} style={{ height: size }} />;
+  return <div className={cn('flex flex-shrink-0', className)} style={{ height: size }} />;
 };
 
 export default Spacing;

@@ -11,7 +11,6 @@ import prettier from 'eslint-plugin-prettier/recommended';
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-
   // prettier 플러그인 규칙 추가
   prettier,
 

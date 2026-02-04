@@ -1,4 +1,4 @@
-import { Spacing } from '@/src/shared/uiKit';
+import { ScrollIntoView } from '@/src/shared/uiKit';
 import React from 'react';
 
 interface OrderBookProps {
@@ -19,11 +19,11 @@ export const OrderBook = ({ AskOrderBooks, BidOrderBooks, PriceInfo, RecentTrade
           <div className={'absolute bottom-0 left-0 w-full'}>{PriceInfo}</div>
         </div>
       </div>
-      <Spacing size={1} className={'bg-gray-300'} />
+      <ScrollIntoView className={'flex-shink-0 h-[1px] bg-gray-300'} />
       <div className="flex w-full">
         {/* 체결창 */}
         <div className="w-[32vw]">{RecentTrades}</div>
-        {/* 매도 리스트 */}
+        {/* 매수 리스트 */}
         {BidOrderBooks}
       </div>
     </div>

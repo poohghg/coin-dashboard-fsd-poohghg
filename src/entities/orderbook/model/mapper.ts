@@ -26,6 +26,4 @@ export class OrderbookMapper {
       supportedLevels: dto.supported_levels.map(Number),
     };
   }
-
-  static toOrderBookPolicy() {}
 }

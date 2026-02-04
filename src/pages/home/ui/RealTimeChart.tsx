@@ -1,10 +1,7 @@
 'use client';
 
 import { routers } from '@/src/app/constant/router';
-import { HEADER_SIZE } from '@/src/app/constant/size';
-import { Coin } from '@/src/entities/coin';
-import { useLiveCoin } from '@/src/entities/coin/lib/useUpbitWebSocket';
-import { CoinViewModel } from '@/src/entities/coin/ui/CoinViewModel';
+import { Coin, CoinViewModel, useLiveCoin } from '@/src/entities/coin';
 import { FavoriteCoinButton } from '@/src/features/coin/ui';
 import { HighlightValue, SeeMoreList } from '@/src/shared/uiKit';
 import Link from 'next/link';
@@ -15,8 +12,7 @@ const ListHeader = ({ fetchAt }: { fetchAt: Date }) => {
 
   return (
     <li
-      className={`sticky z-10 flex w-full items-center border-y border-gray-200 bg-white py-3 font-semibold text-gray-500 shadow-sm max-[390px]:text-[0.8125em] max-[360px]:text-[0.6875em]`}
-      style={{ top: `${44 + HEADER_SIZE.LAYOUT_HEIGHT}px` }}
+      className={`top-content-top sticky z-10 flex w-full items-center border-y border-gray-200 bg-white py-3 font-semibold text-gray-500 shadow-sm max-[390px]:text-[0.8125em] max-[360px]:text-[0.6875em]`}
     >
       <div className="flex min-w-0 flex-1 pl-6">
         <span>순위·실시간 {time} 기준</span>
@@ -96,7 +92,7 @@ const RealTimeChart = ({ coins, fetchedAt, queryKey }: RealTimeChartProps) => {
   return (
     <SeeMoreList data={coins} key={queryKey} pageSize={50} isInfiniteScroll>
       {data => (
-        <ul className={`text-[14px]`}>
+        <ul className="flex w-full flex-col items-center text-[14px]">
           <ListHeader fetchAt={fetchedAt} />
           {data.map((coin, index) => (
             <ListRow key={coin.market} coin={coin} rank={index + 1} />

@@ -6,7 +6,7 @@ import { HomeTabs } from '@/src/pages/home/constant';
 import { ListFilter } from '@/src/pages/home/ui/ListFilter';
 import RealTimeChart from '@/src/pages/home/ui/RealTimeChart';
 import { yieldToMain } from '@/src/shared/lib/utils';
-import { If, SearchBar, Spacing, TabsPanel } from '@/src/shared/uiKit';
+import { If, SearchBar, TabsPanel } from '@/src/shared/uiKit';
 
 interface HomeTabPanelsProps {
   coins: Coin[];
@@ -32,7 +32,6 @@ const HomeTabPanels = ({ coins, fetchedAt }: HomeTabPanelsProps) => {
         onInputChange={setQuery}
         useDebounce
       />
-      <Spacing size={24} />
       <ListFilter sortState={sortState} onChangeSortState={handleChangeSortState} onChangeDirection={changeDirection} />
       {HomeTabs.map(({ tabKey }) => (
         <TabsPanel key={tabKey} tabKey={tabKey}>

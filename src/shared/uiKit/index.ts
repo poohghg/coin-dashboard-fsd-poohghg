@@ -14,6 +14,7 @@ export {
   If,
   SeeMoreList,
   HighlightValue,
+  ScrollIntoView,
 } from './components';
 
 export type { BaseTab } from './components';
