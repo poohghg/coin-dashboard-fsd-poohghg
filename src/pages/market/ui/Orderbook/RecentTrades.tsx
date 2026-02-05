@@ -37,14 +37,14 @@ interface RecentTradeProps {
 const VIEW_LIMIT = 21;
 export const RecentTrades = ({ market, tradeTicks }: RecentTradeProps) => {
   const [currentTradeTicks, setCurrentTradeTicks] = useTradeTicks(tradeTicks);
-  const liveSocketData = useLiveTradeTick(market);
+  const { tradeTicks: liveTradeTicks } = useLiveTradeTick(market);
   const strength = calculateTradingIntensity(currentTradeTicks);
 
   useEffect(() => {
-    if (liveSocketData) {
-      setCurrentTradeTicks(liveSocketData);
+    if (liveTradeTicks) {
+      setCurrentTradeTicks(liveTradeTicks);
     }
-  }, [liveSocketData, setCurrentTradeTicks]);
+  }, [liveTradeTicks, setCurrentTradeTicks]);
 
   return (
     <div className={`text-[11px]`}>

@@ -1,11 +1,11 @@
 import { Coin } from '@/src/entities/coin';
 import { CoinMapper } from '@/src/entities/coin/model/mapper';
-import { CoinDetailSocketDTO, CoinSocketDTO, CoinSocketSchema } from '@/src/entities/coin/model/schema';
+import { CoinDetailSocketDTO, CoinSocketSchema } from '@/src/entities/coin/model/schema';
 import { useUpbitSocketBase } from '@/src/shared/lib/upbitSocket';
 import { useMemo } from 'react';
 
 export const useLiveCoin = (code: string, initialCoin: Coin): Coin => {
-  const { data: socketData } = useUpbitSocketBase<CoinDetailSocketDTO>({
+  const { lastMessage: socketData } = useUpbitSocketBase<CoinDetailSocketDTO>({
     type: 'ticker',
     code: code,
   });

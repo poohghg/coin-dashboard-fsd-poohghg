@@ -20,7 +20,7 @@ interface UseUpbitSocketBaseProps {
 export const useUpbitSocketBase = <T>({ type, code }: UseUpbitSocketBaseProps) => {
   const key = `${type}:${code}`;
 
-  const { data, sendMessage } = useWebSocket<T>({
+  const { lastMessage, lastMessages, sendMessage } = useWebSocket<T>({
     url: UPBIT_SOCKET_URL,
     key,
     keyExtractor: upbitKeyExtractor,
@@ -37,5 +37,8 @@ export const useUpbitSocketBase = <T>({ type, code }: UseUpbitSocketBaseProps) =
     };
   }, [type, code]);
 
-  return { data };
+  return {
+    lastMessage,
+    lastMessages,
+  };
 };

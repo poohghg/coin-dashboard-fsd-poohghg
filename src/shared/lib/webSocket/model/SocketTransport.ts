@@ -13,7 +13,12 @@ export class SocketTransport {
   private messageQueue: string[] = [];
 
   constructor(private options: TransportOptions) {
+    if (typeof window === 'undefined') return;
     this.connect();
+  }
+
+  get getSocket() {
+    return this.socket;
   }
 
   public sendMessage(data: any) {
@@ -75,6 +80,7 @@ export class SocketTransport {
 
   private handleTransportClose(event: CloseEvent, reconnect: boolean = true) {
     this.log(`Disconnected (Code: ${event.code})`);
+    this.log('Close event:', event);
     this.socket = null;
     this.options.onClose();
     if (reconnect) {

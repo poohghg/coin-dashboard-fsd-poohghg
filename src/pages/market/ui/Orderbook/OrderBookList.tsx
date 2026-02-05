@@ -20,9 +20,9 @@ const OrderQuantity = ({
 }) => {
   return (
     <div
-      className={`relative flex h-full w-[32vw] items-center py-1.5 ${type === 'ASK' ? 'justify-end' : 'justify-start'}`}
+      className={`relative flex h-full w-[32vw] items-center py-3 ${type === 'ASK' ? 'justify-end' : 'justify-start'}`}
     >
-      <div className={cn('h-full opacity-50', sideColor)} style={{ width: `${barWidth}%` }} />
+      <div className={cn('h-full rounded-[4px] opacity-50', sideColor)} style={{ width: `${barWidth}%` }} />
       <span className="absolute z-10 text-[11px] text-gray-800">{CoinViewModel.formatVolume(size)}</span>
     </div>
   );
@@ -32,19 +32,19 @@ const OrderPrice = ({
   price,
   rate,
   changeType,
-  lastTradePrice,
+  isLastTradePrice,
 }: {
   price: number;
   rate: number;
   changeType: CoinChangeType;
-  lastTradePrice: number;
+  isLastTradePrice: boolean;
 }) => {
   const color = CoinViewModel.changeColorClass(changeType);
   return (
     <Button
       className={cn(
         'z-10 flex h-full flex-1 flex-col items-center justify-center gap-0 rounded-none border-x border-gray-300',
-        price === lastTradePrice
+        isLastTradePrice
           ? `relative bg-white before:absolute before:inset-0 before:rounded-[8px] before:border before:border-gray-400 before:shadow-[0_2px_6px_rgba(0,0,0,0.1)]`
           : ''
       )}
@@ -85,7 +85,12 @@ const OrderBookRow = ({
       <If condition={type === 'ASK'}>
         <OrderQuantity type={type} barWidth={barWidth} size={unit.size} sideColor={sideColor} />
       </If>
-      <OrderPrice price={unit.price} rate={changeRate} changeType={changeType} lastTradePrice={lastTradePrice} />
+      <OrderPrice
+        price={unit.price}
+        rate={changeRate}
+        changeType={changeType}
+        isLastTradePrice={unit.price === lastTradePrice}
+      />
       <If condition={type === 'BID'}>
         <OrderQuantity type={type} barWidth={barWidth} size={unit.size} sideColor={sideColor} />
       </If>
@@ -102,10 +107,10 @@ interface OrderBookListProps {
 
 export const OrderBookList = ({ type, orderBook, prevClose, lastLiveTradePrice }: OrderBookListProps) => {
   const liveOrderbook = useLiveOrderbook(orderBook.market, orderBook);
-  const liveTick = useLiveTradeTick(orderBook.market);
+  const { tradeTick } = useLiveTradeTick(orderBook.market);
   const maxVol = Math.max(...liveOrderbook.units.map(u => (type === 'ASK' ? u.askSize : u.bidSize)));
   const units = type === 'ASK' ? [...liveOrderbook.units].reverse() : liveOrderbook.units;
-  const lastTradePrice = liveTick ? liveTick.price : lastLiveTradePrice;
+  const lastTradePrice = tradeTick ? tradeTick.price : lastLiveTradePrice;
 
   return (
     <ul className="flex flex-1 flex-col justify-end">

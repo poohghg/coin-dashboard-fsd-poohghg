@@ -18,18 +18,22 @@ export class SocketManager {
   private readonly url: string;
 
   // 상태 저장소 & 구독자 관리
-  private store = new Map<string, any>();
+  private store = new Map<string, any[]>();
   private listeners = new Map<string, Set<() => void>>();
 
   // 리소스 관리
   private subscriberCount = 0;
   private cleanupTimeoutId: NodeJS.Timeout | null = null;
 
+  // 배치 처리를 위한 큐와 플래그
+  private updateQueue = new Map<string, any[]>();
+  private isProcessing = false;
+  private processTimerId: NodeJS.Timeout | null = null;
+
   constructor(options: SocketManagerOptions) {
     this.url = options.url;
     this.keyExtractor = options.keyExtractor;
     this.cleanupDelay = options.cleanupDelay ?? 30000;
-
     this.transport = new SocketTransport({
       url: this.url,
       maxReconnectDelay: options.maxReconnectDelay ?? 30000,
@@ -37,6 +41,10 @@ export class SocketManager {
       onMessage: e => this.handleMessage(e),
       onClose: () => this.handleTransportClose(),
     });
+  }
+
+  get socket() {
+    return this.transport.getSocket;
   }
 
   public subscribe = (key: string, listener: () => void) => {
@@ -107,8 +115,6 @@ export class SocketManager {
   }
 
   private handleTransportClose() {
-    // 연결이 끊겨도 구독자가 있다면 Transport 내부에서 재연결을 시도하므로
-    // 여기서 특별히 할 일은 없으나, 필요하다면 UI 갱신 로직 추가 가능
     if (this.subscriberCount > 0) {
       // keep waiting for reconnect inside transport
     }
@@ -116,13 +122,43 @@ export class SocketManager {
 
   private cleanup() {
     this.transport.disconnect();
+    this.store.clear();
+    this.listeners.clear();
+    if (this.processTimerId) {
+      clearTimeout(this.processTimerId);
+    }
     removeManagerFromCache(this.url);
   }
 
   private updateStore(key: string, data: any) {
-    this.store.set(key, data);
-    if (this.listeners.has(key)) {
-      this.listeners.get(key)!.forEach(listener => listener());
+    if (!this.listeners.has(key)) return;
+
+    if (!this.updateQueue.has(key)) {
+      this.updateQueue.set(key, []);
     }
+    this.updateQueue.get(key)!.push(data);
+
+    if (!this.isProcessing) {
+      this.isProcessing = true;
+      this.processTimerId = setTimeout(() => {
+        this.processQueue();
+      }, 0);
+    }
+  }
+
+  private processQueue() {
+    this.updateQueue.forEach((updates, key) => {
+      const keyListeners = this.listeners.get(key);
+
+      if (!keyListeners) {
+        updates.length = 0;
+        return;
+      }
+      this.store.set(key, updates);
+      keyListeners.forEach(listener => listener());
+    });
+
+    this.isProcessing = false;
+    this.updateQueue.clear();
   }
 }

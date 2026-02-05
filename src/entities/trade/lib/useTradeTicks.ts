@@ -10,11 +10,11 @@ export const useTradeTicks = (initialTicks: TradeTick[], limit: number = 500) =>
   const [ticks, setTicks] = useState<TradeTick[]>(initialTicks);
 
   const addTick = useCallback(
-    (newTick: TradeTick) => {
+    (newTick: TradeTick | TradeTick[]) => {
       setTicks(prevTicks => {
-        const newTicks = [newTick, ...prevTicks];
+        const newTicks = Array.isArray(newTick) ? [...newTick, ...prevTicks] : [newTick, ...prevTicks];
 
-        if (limit < newTicks.length) {
+        while (limit < newTicks.length) {
           newTicks.pop();
         }
 
