@@ -1,6 +1,13 @@
 import { TimeFrame } from '@/src/entities/candle';
+import { CandleQueryKeys } from '@/src/entities/candle/queryOption/queryOption';
 import { marketService } from '@/src/pages/market/usecase/marketService';
 import { useInfiniteQuery } from '@tanstack/react-query';
+
+const getISOString = (date: Date) => {
+  return date.toISOString().split('.')[0];
+};
+
+const staleTimeInfinityGroup = ['days', 'weeks', 'months'];
 
 interface CandleQueryParams {
   market: string;
@@ -8,27 +15,23 @@ interface CandleQueryParams {
   count?: number;
 }
 
-const getKstISOString = (date: Date) => {
-  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-  return kstDate.toISOString().split('.')[0];
-};
-
-const staleTimeInfinityGroup = ['days', 'weeks', 'months'];
-
 export const useCandlestickInfiniteQuery = ({ market, timeframe, count = 200 }: CandleQueryParams) => {
   return useInfiniteQuery({
-    queryKey: ['candles', market, timeframe],
+    queryKey: CandleQueryKeys.candles({ market, timeframe }),
     queryFn: async ({ pageParam }) => {
-      const data = await marketService.getCandles(market, timeframe, count, pageParam);
-      return data;
+      try {
+        const data = await marketService.getCandles(market, timeframe, count, pageParam);
+        return data;
+      } catch (error) {
+        throw error;
+      }
     },
-    getPreviousPageParam: firstPage => {
-      if (firstPage.length === 0) return undefined;
+    getNextPageParam: firstPage => {
+      if (firstPage.length < count) return undefined;
       const oldestCandle = firstPage[firstPage.length - 1];
-      return oldestCandle.candle_date_time_kst;
+      return oldestCandle.candle_date_time_utc;
     },
-    getNextPageParam: () => undefined,
-    initialPageParam: getKstISOString(new Date()),
+    initialPageParam: getISOString(new Date()),
     staleTime: staleTimeInfinityGroup.includes(timeframe) ? Infinity : 0,
     placeholderData: previousData => previousData,
   });

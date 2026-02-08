@@ -14,13 +14,15 @@ export async function GET(request: Request) {
       headers: { 'Content-Type': 'application/json' },
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`Upbit API error: ${response.statusText}`);
+      return NextResponse.json({ error: `Upbit API error: ${data.name}` }, { status: response.status });
     }
 
-    const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch' }, { status: 500 });
+    console.log('Error fetching candles from Upbit:', error);
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

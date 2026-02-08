@@ -18,7 +18,7 @@ interface TimeFramesProps {
 
 export const TimeFrames = ({ timeFrame, setTimeFrame }: TimeFramesProps) => {
   return (
-    <div className="flex gap-1 rounded-lg bg-gray-100">
+    <div className="flex items-center gap-1 rounded-lg bg-gray-100">
       {TIMEFRAMES.map(tf => (
         <button
           key={tf.value}

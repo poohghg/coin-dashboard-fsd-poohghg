@@ -1,13 +1,13 @@
 import { CandleQuery } from '@/src/entities/candle/api/params';
 import { QueryOptions } from '@/src/shared/lib/reactQuery/model/reactQuery';
-import { UseQueryOptions } from 'react-query/types/react/types';
+import { UseQueryOptions } from '@tanstack/react-query';
 
-export const candleQueryKeys = {
+export const CandleQueryKeys = {
   base: 'candle' as const,
-  candles: ({ market, timeframe, to, count }: CandleQuery) =>
-    [candleQueryKeys.base, 'candes', { market, timeframe, to, count }] as const,
+  candles: ({ market, timeframe }: CandleQuery) => ['candes', market, timeframe] as const,
 };
 
+// todo makeQueryOptions generic하게 빼내기
 const makeQueryOptions = <T, TSelect = T>(
   queryKey: readonly unknown[],
   queryFn: () => Promise<T>,
@@ -20,7 +20,7 @@ const makeQueryOptions = <T, TSelect = T>(
 
 export const CandleQueryOptions = {
   candles: <T, TSelect = T>(query: CandleQuery, queryFn: () => Promise<T>, queryOptions?: QueryOptions<T, TSelect>) =>
-    makeQueryOptions(candleQueryKeys.candles(query), queryFn, {
+    makeQueryOptions(CandleQueryKeys.candles(query), queryFn, {
       ...queryOptions,
     }),
 };

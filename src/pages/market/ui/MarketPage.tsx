@@ -3,10 +3,14 @@ import { MarketHeader } from '@/src/pages/market/ui/MarketHeader';
 import { MarketTab } from '@/src/pages/market/ui/MarketTab';
 import { marketService } from '@/src/pages/market/usecase/marketService';
 import { ServerFetcher } from '@/src/shared/uiKit';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 const marketPage = async ({ params }: { params: Promise<{ market: string; tab: string }> }) => {
-  const { market, tab } = await params;
+  let { market, tab } = await params;
+
+  if (!tab) {
+    redirect(`/market/${market}/orderbook`);
+  }
 
   if (!MarketTabKeys.has(tab as any)) {
     return notFound();

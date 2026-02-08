@@ -5,7 +5,7 @@ import { useCandlestickInfiniteQuery } from '@/src/pages/market/query/useCandles
 import { Chart } from '@/src/pages/market/ui/Chart/Chart';
 import { ChartLegend } from '@/src/pages/market/ui/Chart/ChartLegend';
 import { TimeFrames } from '@/src/pages/market/ui/Chart/TimeFrames';
-import { CandlestickData, Time } from 'lightweight-charts';
+import { CandlestickData } from 'lightweight-charts';
 import React, { useMemo, useState } from 'react';
 
 interface ChartProps {
@@ -25,8 +25,8 @@ export const UpbitChart = ({ marketCode }: ChartProps) => {
   const [legendData, setLegendData] = useState<LegendData | null>(null);
   const {
     data: candlePages,
-    fetchPreviousPage,
-    hasPreviousPage,
+    fetchNextPage,
+    hasNextPage,
     isFetchingPreviousPage,
   } = useCandlestickInfiniteQuery({
     market: marketCode,
@@ -40,36 +40,30 @@ export const UpbitChart = ({ marketCode }: ChartProps) => {
   const chartData = useMemo<CandlestickData[]>(() => {
     if (!candlePages?.pages) return [];
 
-    // pages는 [과거 데이터, ..., 최신 데이터] 순서로 정렬되어 있다고 가정
-    // (fetchPreviousPage 사용 시 새 데이터가 배열의 앞쪽에 추가됨)
-    const allCandles = candlePages.pages.flat();
+    const candlestickData: CandlestickData[] = [];
 
-    console.log('allCandles length:', allCandles);
+    for (let i = candlePages.pages.length - 1; 0 <= i; i--) {
+      const page = candlePages.pages[i];
+      for (let j = page.length - 1; 0 <= j; j--) {
+        const candle = page[j];
+        candlestickData.push(candle.candlestickData);
+      }
+    }
 
-    // 중복 제거 및 포맷팅
-    const uniqueMap = new Map<Time, CandlestickData>();
-
-    allCandles.forEach(item => {
-      uniqueMap.set(item.candle_date_time_kst, item.candlestickData);
-    });
-
-    // 시간 순 정렬 (Lightweight Charts는 시간 순서가 필수)
-    return Array.from(uniqueMap.values()).sort((a, b) => (a.time as number) - (b.time as number));
+    return candlestickData;
   }, [candlePages?.pages]);
 
   return (
     <div className="w-full bg-white">
-      <div className="flex items-center">
-        <TimeFrames timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
-      </div>
+      <TimeFrames timeFrame={timeFrame} setTimeFrame={setTimeFrame} />
       <div className="relative w-full">
         <ChartLegend legendData={legendData} />
         <Chart
           data={chartData}
           timeFrame={timeFrame}
           setLegend={updateLegendData}
-          onLoadMore={fetchPreviousPage}
-          hasMore={hasPreviousPage}
+          onLoadMore={fetchNextPage}
+          hasMore={hasNextPage}
           isLoading={isFetchingPreviousPage}
         />
       </div>

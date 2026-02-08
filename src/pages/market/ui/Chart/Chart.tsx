@@ -12,7 +12,8 @@ import {
   MouseEventParams,
   Time,
 } from 'lightweight-charts';
-import React, { useEffect, useRef } from 'react';
+import { throttle } from 'lodash';
+import React, { useEffect, useMemo, useRef } from 'react';
 
 const THEME = {
   upColor: '#D24F45',
@@ -37,7 +38,48 @@ export const Chart = ({ data, setLegend, timeFrame, onLoadMore, hasMore, isLoadi
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
   const fetchStateRef = useRef({ onLoadMore, hasMore, isLoading });
 
-  // Props가 바뀔 때마다 Ref 업데이트
+  const throttledLoadMore = useMemo(
+    () =>
+      throttle(() => {
+        const { hasMore, isLoading, onLoadMore } = fetchStateRef.current;
+        if (hasMore && !isLoading) {
+          onLoadMore();
+        }
+      }, 1000),
+    []
+  );
+
+  const setTimeScaleOptions = () => {
+    const isMinuteChart = timeFrame.includes('minutes');
+    if (chartRef.current) {
+      chartRef.current.applyOptions({
+        timeScale: {
+          timeVisible: isMinuteChart,
+          secondsVisible: false,
+        },
+        localization: {
+          dateFormat: 'yyyy-MM-dd',
+          timeFormatter: (time: Time) => {
+            const date = new Date((time as number) * 1000);
+            return new Intl.DateTimeFormat('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              ...(isMinuteChart && { hour: '2-digit', minute: '2-digit', hour12: false }),
+            }).format(date);
+          },
+        },
+      });
+    }
+  };
+
+  const fitChartToContent = () => {
+    if (chartRef.current && seriesRef.current?.data().length) {
+      chartRef.current.timeScale().fitContent();
+      chartRef.current.priceScale('right').applyOptions({ autoScale: true });
+    }
+  };
+
   useEffect(() => {
     fetchStateRef.current = { onLoadMore, hasMore, isLoading };
   }, [onLoadMore, hasMore, isLoading]);
@@ -61,10 +103,9 @@ export const Chart = ({ data, setLegend, timeFrame, onLoadMore, hasMore, isLoadi
       },
       localization: {
         priceFormatter: (price: number) => CoinViewModel.formatPrice(price as number),
-        dateFormat: 'yyyy-MM-dd',
       },
       crosshair: {
-        mode: 1,
+        mode: 0,
         vertLine: { labelVisible: true },
         horzLine: { labelVisible: true },
       },
@@ -90,18 +131,11 @@ export const Chart = ({ data, setLegend, timeFrame, onLoadMore, hasMore, isLoadi
     chartRef.current = chart;
     seriesRef.current = series;
 
-    //  Ref를 통해 최신 상태 접근
-    const handleRangeChange = (newRange: LogicalRange | null) => {
-      const { hasMore, isLoading, onLoadMore } = fetchStateRef.current;
-
-      if (newRange) {
-        if (newRange.from < 5 && hasMore && !isLoading) {
-          onLoadMore();
-        }
+    chart.timeScale().subscribeVisibleLogicalRangeChange((newRange: LogicalRange | null) => {
+      if (newRange && newRange.from < 5) {
+        throttledLoadMore();
       }
-    };
-
-    chart.timeScale().subscribeVisibleLogicalRangeChange(handleRangeChange);
+    });
     // ... (나머지 이벤트 리스너 동일) ...
     chart.subscribeCrosshairMove((param: MouseEventParams) => {
       if (!param.point || !param.time) {
@@ -132,32 +166,22 @@ export const Chart = ({ data, setLegend, timeFrame, onLoadMore, hasMore, isLoadi
 
   // 데이터 변경 감지 및 업데이트
   useEffect(() => {
-    if (seriesRef.current && data.length > 0) {
-      seriesRef.current.setData(data);
-    }
+    if (data.length === 0) return;
+    seriesRef.current?.setData(data);
   }, [data]);
 
   // 타임프레임 변경 시 차트 맞춤
   useEffect(() => {
-    if (chartRef.current && seriesRef.current?.data().length) {
-      chartRef.current.timeScale().fitContent();
-    }
-    const isMinuteChart = timeFrame.includes('minutes');
-    if (chartRef.current) {
-      chartRef.current.applyOptions({
-        timeScale: {
-          timeVisible: isMinuteChart,
-        },
-        localization: {
-          timeFormatter: (time: Time) => {
-            if (!isMinuteChart) return '';
-            const date = new Date((time as number) * 1000);
-            return date.toLocaleString();
-          },
-        },
-      });
-    }
+    fitChartToContent();
+    setTimeScaleOptions();
   }, [timeFrame]);
 
-  return <div ref={chartContainerRef} className="w-full" />;
+  return (
+    <>
+      <div ref={chartContainerRef} className="w-full" />
+      {/*<button*/}
+      {/*  className={`absolute right-0 bottom-0 flex h-[28px] w-[82px] items-center justify-center rounded-full bg-white shadow-md transition-shadow hover:shadow-lg`}*/}
+      {/*></button>*/}
+    </>
+  );
 };
