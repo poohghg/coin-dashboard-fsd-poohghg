@@ -1,0 +1,1 @@
+export { useResetPrevInfiniteQuery } from './useResetPrevInfiniteQuery';

@@ -76,7 +76,6 @@ const httpErrorRegistry: Record<number, HttpErrorCreator> = {
 
 export class HttpErrorFactory {
   static create(payload: HttpErrorPayload): HttpError {
-    console.log('Creating HttpError with payload:', payload);
     const creator = httpErrorRegistry[payload.status];
     return creator ? creator(payload) : new UnknownHttpError(payload.status, payload.message);
   }

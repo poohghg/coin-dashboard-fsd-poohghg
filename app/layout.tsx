@@ -1,3 +1,4 @@
+import { ReactQueryProvider } from '@/src/shared/lib/reactQuery';
 import { ToastList } from '@/src/shared/uiKit';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -27,9 +28,17 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
-        <div className={'relative isolate z-0 mx-auto flex max-w-[1200px] flex-col'}>{children}</div>
-        <ToastList />
+        <RootComponent>{children}</RootComponent>
       </body>
     </html>
   );
 }
+
+const RootComponent = ({ children }: Readonly<{ children: ReactNode }>) => {
+  return (
+    <ReactQueryProvider>
+      <div className={'relative isolate z-0 mx-auto flex max-w-[1200px] flex-col'}>{children}</div>
+      <ToastList />
+    </ReactQueryProvider>
+  );
+};

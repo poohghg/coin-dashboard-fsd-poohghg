@@ -124,7 +124,6 @@ export default class FetchBuilder {
   private buildUrl(): string {
     const domain = this.getDomain();
     const url = `${domain}${this._url}`;
-
     return this._method === 'GET' ? this.buildUrlWithParams(url) : `${url}`;
   }
 

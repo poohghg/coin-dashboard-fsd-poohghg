@@ -1,0 +1,1 @@
+export { getDehydratedQuery } from './getDehydratedQuery';

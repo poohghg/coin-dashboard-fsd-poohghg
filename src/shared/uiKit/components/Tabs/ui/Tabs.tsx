@@ -5,7 +5,7 @@ import { TabsContextProvider } from '@/src/shared/uiKit/components/Tabs/Context'
 import TabsList from '@/src/shared/uiKit/components/Tabs/ui/TabsList';
 import TabsListActive from '@/src/shared/uiKit/components/Tabs/ui/TabsListActive';
 import TabsPanel from '@/src/shared/uiKit/components/Tabs/ui/TabsPanel';
-import TabsTrigger from '@/src/shared/uiKit/components/Tabs/ui/TabsTrigger';
+import { TabsTrigger } from '@/src/shared/uiKit/components/Tabs/ui/TabsTrigger';
 import { ElementType, ReactNode } from 'react';
 
 interface TabsProps {

@@ -1,19 +1,31 @@
+'use client';
+
+import { MarketTabs } from '@/src/pages/market/constant';
 import { TabsList, TabsListActive, TabsTrigger } from '@/src/shared/uiKit';
 
-export const MarketTabList = () => {
+interface MarketTabListProps {
+  market: string;
+}
+
+export const MarketTabList = ({ market }: MarketTabListProps) => {
+  const handleTabChange = (key: string) => {
+    history.replaceState(null, '', `/market/${market}/${key}`);
+  };
+
   return (
     <div className="top-content-top sticky z-50 border-b border-gray-300 bg-white py-1">
       <TabsList>
         <TabsListActive type={'button'} />
-        <TabsTrigger className="text-[15px] font-semibold text-gray-400" tabKey={'orderbook'}>
-          호가
-        </TabsTrigger>
-        <TabsTrigger className="text-[15px] font-semibold text-gray-400" tabKey={'chart'}>
-          차트
-        </TabsTrigger>
-        <TabsTrigger className="text-[15px] font-semibold text-gray-400" tabKey={'c'}>
-          내 자산
-        </TabsTrigger>
+        {MarketTabs.map(tab => (
+          <TabsTrigger
+            key={tab.value}
+            className="text-[15px] font-semibold text-gray-400"
+            tabKey={tab.value}
+            onClick={() => handleTabChange(tab.value)}
+          >
+            {tab.label}
+          </TabsTrigger>
+        ))}
       </TabsList>
     </div>
   );

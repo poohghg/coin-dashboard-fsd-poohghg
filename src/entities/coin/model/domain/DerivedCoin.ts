@@ -89,7 +89,6 @@ export class DerivedCoin implements Coin {
     return this.props.market_event.caution.CONCENTRATION_OF_SMALL_ACCOUNTS;
   }
 
-  /** ===== serialization ===== */
   toJSON(): Coin {
     return {
       symbol: this.symbol,

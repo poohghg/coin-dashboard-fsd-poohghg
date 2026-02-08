@@ -10,7 +10,6 @@ const sizeStyles: Record<SizeType, string> = {
 
 const TabsListActive = ({
   className,
-  ref,
   type = 'underline',
   ...props
 }: MergeElementProps<
@@ -31,13 +30,6 @@ const TabsListActive = ({
             el.style.transform = `translateX(${selectedTab.offsetLeft}px)`;
             el.style.width = `${rect.width}px`;
             el.style.opacity = '1';
-            if (ref) {
-              if (typeof ref === 'function') {
-                ref(el);
-              } else if (typeof ref === 'object' && ref !== null) {
-                (ref as React.MutableRefObject<HTMLDivElement | null>).current = el;
-              }
-            }
           }
         }
       }}

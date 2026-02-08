@@ -1,17 +1,18 @@
 import { CoinDetail } from '@/src/entities/coin/model/type';
-import { UpbitChart } from '@/src/pages/market/ui/Chart/Chart';
+import { UpbitChart } from '@/src/pages/market/ui/Chart/MarketChart';
 import { MarketTabList } from '@/src/pages/market/ui/MarketTabList';
 import { OrderBookPanel } from '@/src/pages/market/ui/OrderBookPanel';
 import { Spacing, Tabs, TabsPanel } from '@/src/shared/uiKit';
 
 interface MarketTabProps {
   coin: CoinDetail;
+  defaultTab: string;
 }
 
-export const MarketTab = ({ coin }: MarketTabProps) => {
+export const MarketTab = async ({ coin, defaultTab }: MarketTabProps) => {
   return (
-    <Tabs defaultKey={'orderbook'} className={'w-full px-3'}>
-      <MarketTabList />
+    <Tabs defaultKey={defaultTab} className={'w-full px-3'}>
+      <MarketTabList market={coin.market} />
       <Spacing size={12} />
       <TabsPanel tabKey={'orderbook'}>
         <OrderBookPanel coin={coin} />
