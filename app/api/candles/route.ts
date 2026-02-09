@@ -22,7 +22,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } catch (error) {
-    console.log('Error fetching candles from Upbit:', error);
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }

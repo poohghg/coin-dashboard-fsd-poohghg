@@ -81,14 +81,15 @@ const ListRow = ({ coin, rank }: { coin: Coin; rank: number }) => {
 
 interface RealTimeChartProps {
   coins: Coin[];
-  fetchedAt: Date;
   queryKey?: string;
 }
 
-const RealTimeChart = ({ coins, fetchedAt, queryKey }: RealTimeChartProps) => {
+const RealTimeChart = ({ coins, queryKey }: RealTimeChartProps) => {
   if (coins.length === 0) {
     return <div className="py-10 text-center text-gray-500">해당 코인이 없습니다.</div>;
   }
+
+  const fetchedAt = new Date(coins[0]?.timestamp || Date.now());
   return (
     <SeeMoreList data={coins} key={queryKey} pageSize={50} isInfiniteScroll>
       {data => (

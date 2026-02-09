@@ -35,10 +35,7 @@ import { CoinRepository } from '@/src/entities/coin/model/repository';
  */
 
 interface HomeUseCase {
-  getCoinList(): Promise<{
-    data: Coin[];
-    fetchedAt: Date;
-  }>;
+  getCoinList(): Promise<Coin[]>;
 }
 
 class HomeService implements HomeUseCase {
@@ -49,12 +46,7 @@ class HomeService implements HomeUseCase {
   }
 
   getCoinList = async () => {
-    const date = new Date();
-
-    return {
-      data: await this.coinRepository.getCoins(),
-      fetchedAt: date,
-    };
+    return await this.coinRepository.getCoins();
   };
 }
 

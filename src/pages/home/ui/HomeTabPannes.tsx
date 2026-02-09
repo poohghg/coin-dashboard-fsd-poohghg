@@ -9,10 +9,9 @@ import { If, SearchBar, TabsPanel } from '@/src/shared/uiKit';
 
 interface HomeTabPanelsProps {
   coins: Coin[];
-  fetchedAt: Date;
 }
 
-const HomeTabPanels = ({ coins, fetchedAt }: HomeTabPanelsProps) => {
+const HomeTabPanels = ({ coins }: HomeTabPanelsProps) => {
   const { searchedCoins, searchQuery, setQuery } = useSearchCoins(coins);
   const { sortedCoins, sortState, changeSortState, changeDirection } = useSortCoins(searchedCoins);
   const queryKey = `${searchQuery}-${sortState.field}`;
@@ -29,11 +28,11 @@ const HomeTabPanels = ({ coins, fetchedAt }: HomeTabPanelsProps) => {
       {HomeTabs.map(({ tabKey }) => (
         <TabsPanel key={tabKey} tabKey={tabKey}>
           <If condition={tabKey === 'live'}>
-            <RealTimeChart coins={sortedCoins} fetchedAt={fetchedAt} queryKey={queryKey} />
+            <RealTimeChart coins={sortedCoins} queryKey={queryKey} />
           </If>
           <If condition={tabKey === 'favorite'}>
             <FavoritesCoins coins={sortedCoins}>
-              {favoriteCoins => <RealTimeChart coins={favoriteCoins} fetchedAt={fetchedAt} queryKey={queryKey} />}
+              {favoriteCoins => <RealTimeChart coins={favoriteCoins} queryKey={queryKey} />}
             </FavoritesCoins>
           </If>
         </TabsPanel>
