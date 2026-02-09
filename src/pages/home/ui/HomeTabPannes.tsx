@@ -17,12 +17,6 @@ const HomeTabPanels = ({ coins, fetchedAt }: HomeTabPanelsProps) => {
   const { sortedCoins, sortState, changeSortState, changeDirection } = useSortCoins(searchedCoins);
   const queryKey = `${searchQuery}-${sortState.field}`;
 
-  // const handleChangeSortState = async (field: CoinSortableField) => {
-  //   changeSortState(field);
-  //   await yieldToMain();
-  //   window.scrollTo({ top: 0, behavior: 'smooth' });
-  // };
-
   return (
     <div>
       <SearchBar

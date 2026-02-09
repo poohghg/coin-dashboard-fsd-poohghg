@@ -1,6 +1,6 @@
 'use client';
 
-import { routers } from '@/src/app/constant/router';
+import { ROUTERS } from '@/src/app/constant/router';
 import { Coin, CoinViewModel, useLiveCoin } from '@/src/entities/coin';
 import { FavoriteCoinButton } from '@/src/features/coin/ui';
 import { HighlightValue, SeeMoreList } from '@/src/shared/uiKit';
@@ -14,12 +14,12 @@ const ListHeader = ({ fetchAt }: { fetchAt: Date }) => {
     <li
       className={`top-content-top sticky z-10 flex w-full items-center border-y border-gray-200 bg-white py-3 font-semibold text-gray-500 shadow-sm max-[390px]:text-[0.8125em] max-[360px]:text-[0.6875em]`}
     >
-      <div className="flex min-w-0 flex-1 pl-6">
+      <div className="flex min-w-0 flex-1 justify-start pl-2">
         <span>순위·실시간 {time} 기준</span>
       </div>
-      <div className="w-[29%] text-right">현재가</div>
+      <div className="w-[28%] text-right">현재가</div>
       <div className="ml-4 w-[18%] text-right">전일대비</div>
-      <div className="ml-4 w-[14%] text-right">거래대금(24H)</div>
+      <div className="ml-4 w-[14%] text-right">거래대금</div>
     </li>
   );
 };
@@ -32,8 +32,8 @@ const ListRow = ({ coin, rank }: { coin: Coin; rank: number }) => {
   return (
     <li className="w-full max-[390px]:text-[0.8125em] max-[360px]:text-[0.6875em]">
       <Link
-        className="flex cursor-pointer items-center rounded-2xl py-3 transition-colors duration-200 hover:bg-gray-200 hover:text-black"
-        href={routers.market(coin.market)}
+        className="flex h-[65px] cursor-pointer items-center rounded-2xl transition-colors duration-200 hover:bg-gray-200 hover:text-black"
+        href={ROUTERS.market(coin.market)}
       >
         <div className={'flex w-6 items-center justify-center'}>
           <FavoriteCoinButton coinId={liveCoin.market} />
@@ -48,7 +48,7 @@ const ListRow = ({ coin, rank }: { coin: Coin; rank: number }) => {
           <div className="truncate text-[0.8em] text-gray-500">{liveCoin.symbol}</div>
         </div>
         {/* 현재가 */}
-        <div className="w-[29%] text-right">
+        <div className="w-[28%] text-right">
           <HighlightValue
             value={liveCoin.trade_price}
             className={`rounded-[6px] py-1 pr-2`}
@@ -92,7 +92,7 @@ const RealTimeChart = ({ coins, fetchedAt, queryKey }: RealTimeChartProps) => {
   return (
     <SeeMoreList data={coins} key={queryKey} pageSize={50} isInfiniteScroll>
       {data => (
-        <ul className="flex w-full flex-col items-center text-[14px]">
+        <ul className="flex w-full flex-col items-center text-[13px]">
           <ListHeader fetchAt={fetchedAt} />
           {data.map((coin, index) => (
             <ListRow key={coin.market} coin={coin} rank={index + 1} />

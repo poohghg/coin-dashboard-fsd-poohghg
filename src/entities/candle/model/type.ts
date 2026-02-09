@@ -1,4 +1,4 @@
-import { Time } from 'lightweight-charts';
+import { OhlcData, UTCTimestamp } from 'lightweight-charts';
 
 export type TimeFrame = 'minutes/1' | 'minutes/15' | 'minutes/60' | 'minutes/240' | 'days' | 'weeks' | 'months';
 
@@ -15,13 +15,14 @@ export interface Candle {
   change_rate: number;
   candle_date_time_kst: string;
   candle_date_time_utc: string;
-  candlestickData: CandlestickData;
+  candlestickData: OhlcData<UTCTimestamp>;
+  first_day_of_period?: string;
 }
 
-export interface CandlestickData {
-  time: Time;
+export interface LegendData {
   open: number;
   high: number;
   low: number;
   close: number;
+  changeRate: number;
 }

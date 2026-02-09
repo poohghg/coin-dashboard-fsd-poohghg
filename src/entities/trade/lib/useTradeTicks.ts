@@ -1,12 +1,12 @@
 import { TradeTick } from '@/src/entities/trade';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * @param initialTicks
  * @param limit
  * @returns 기존 틱들에 새로운 틱을 추가하는 함수와 현재 틱 배열을 반환
  */
-export const useTradeTicks = (initialTicks: TradeTick[], limit: number = 500) => {
+export const useTradeTicks = (initialTicks: TradeTick[], liveTradeTicks: TradeTick[], limit: number = 500) => {
   const [ticks, setTicks] = useState<TradeTick[]>(initialTicks);
 
   const addTick = useCallback(
@@ -24,5 +24,11 @@ export const useTradeTicks = (initialTicks: TradeTick[], limit: number = 500) =>
     [limit]
   );
 
-  return [ticks, addTick] as const;
+  useEffect(() => {
+    if (liveTradeTicks) {
+      addTick(liveTradeTicks);
+    }
+  }, [liveTradeTicks, addTick]);
+
+  return ticks;
 };

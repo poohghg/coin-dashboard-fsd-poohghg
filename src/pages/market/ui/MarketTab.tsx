@@ -1,5 +1,5 @@
 import { CoinDetail } from '@/src/entities/coin/model/type';
-import { UpbitChart } from '@/src/pages/market/ui/Chart/MarketChart';
+import { UpbitChart } from '@/src/pages/market/ui/MarketChart';
 import { MarketTabList } from '@/src/pages/market/ui/MarketTabList';
 import { OrderBookPanel } from '@/src/pages/market/ui/OrderBookPanel';
 import { Spacing, Tabs, TabsPanel } from '@/src/shared/uiKit';

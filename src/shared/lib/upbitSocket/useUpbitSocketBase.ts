@@ -1,6 +1,7 @@
 'use client';
 
-import { upbitSubscriptionManager, UpbitType } from '@/src/shared/lib/upbitSocket/UpbitSubscriptionManager';
+import { UpbitSocketType } from '@/src/shared/lib/upbitSocket/type';
+import { upbitSubscriptionManager } from '@/src/shared/lib/upbitSocket/UpbitSubscriptionManager';
 import { useWebSocket } from '@/src/shared/lib/webSocket/lib/useWebSocket';
 import { useEffect } from 'react';
 
@@ -13,7 +14,7 @@ const upbitKeyExtractor = (message: any) => {
 };
 
 interface UseUpbitSocketBaseProps {
-  type: UpbitType;
+  type: UpbitSocketType;
   code: string;
 }
 

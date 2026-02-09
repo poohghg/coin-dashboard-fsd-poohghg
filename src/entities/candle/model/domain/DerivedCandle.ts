@@ -1,5 +1,5 @@
-import { Time } from 'lightweight-charts';
-import { Candle, CandlestickData } from '../type';
+import { OhlcData, UTCTimestamp } from 'lightweight-charts';
+import { Candle } from '../type';
 
 export interface DerivedCandleProps {
   market: string;
@@ -12,7 +12,7 @@ export interface DerivedCandleProps {
   trade_price: number;
   acc_trade_volume: number;
   acc_trade_price: number;
-  first_day_of_period: string;
+  first_day_of_period?: string;
 }
 
 export class DerivedCandle implements Candle {
@@ -70,9 +70,10 @@ export class DerivedCandle implements Candle {
     return (this.trade_price - this.opening_price) / this.opening_price;
   }
 
-  get candlestickData(): CandlestickData {
-    const date = new Date(this.candle_date_time_kst);
-    const time = (date.getTime() / 1000) as Time;
+  get candlestickData(): OhlcData<UTCTimestamp> {
+    const targetDateStr = this.first_day_of_period || this.candle_date_time_kst;
+    const date = new Date(targetDateStr);
+    const time = (date.getTime() / 1000) as UTCTimestamp;
     return {
       time: time,
       open: this.opening_price,
@@ -97,6 +98,7 @@ export class DerivedCandle implements Candle {
       isBullish: this.isBullish,
       change_rate: this.change_rate,
       candlestickData: this.candlestickData,
+      first_day_of_period: this.first_day_of_period,
     };
   }
 }

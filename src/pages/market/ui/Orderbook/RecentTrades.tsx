@@ -3,7 +3,7 @@
 import { CoinViewModel } from '@/src/entities/coin';
 import { TradeTick, useTradeTicks } from '@/src/entities/trade';
 import { useLiveTradeTick } from '@/src/entities/trade/lib/useLiveTradeTick';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const calculateTradingIntensity = (ticks: TradeTick[]): number => {
   if (ticks.length === 0) return 0;
@@ -25,26 +25,20 @@ const calculateTradingIntensity = (ticks: TradeTick[]): number => {
   //체결강도 공식: (매수체결량 / 매도체결량) * 100
   const intensity = (totalBidVolume / totalAskVolume) * 100;
 
-  // 소수점 둘째 자리까지 반올림
   return Math.round(intensity * 100) / 100;
 };
+
+const VIEW_LIMIT = 21;
 
 interface RecentTradeProps {
   market: string;
   tradeTicks: TradeTick[];
 }
 
-const VIEW_LIMIT = 21;
 export const RecentTrades = ({ market, tradeTicks }: RecentTradeProps) => {
-  const [currentTradeTicks, setCurrentTradeTicks] = useTradeTicks(tradeTicks);
   const { tradeTicks: liveTradeTicks } = useLiveTradeTick(market);
-  const strength = calculateTradingIntensity(currentTradeTicks);
-
-  useEffect(() => {
-    if (liveTradeTicks) {
-      setCurrentTradeTicks(liveTradeTicks);
-    }
-  }, [liveTradeTicks, setCurrentTradeTicks]);
+  const ticks = useTradeTicks(tradeTicks, liveTradeTicks);
+  const strength = calculateTradingIntensity(ticks);
 
   return (
     <div className={`text-[11px]`}>
@@ -57,7 +51,7 @@ export const RecentTrades = ({ market, tradeTicks }: RecentTradeProps) => {
         <span>체결량</span>
       </div>
       <div className="p-2">
-        {currentTradeTicks.slice(0, VIEW_LIMIT).map((tick, index) => (
+        {ticks.slice(0, VIEW_LIMIT).map((tick, index) => (
           <div key={tick.id.toString() + index.toString()} className="flex justify-between">
             <span>{CoinViewModel.formatPrice(tick.price)}</span>
             <span className={tick.side === 'BID' ? 'text-red-500' : 'text-blue-500'}>

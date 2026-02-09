@@ -57,7 +57,7 @@ export const ListFilter = ({ sortState, onChangeSortState, onChangeDirection }: 
       <div className="flex shrink-0 items-center">
         <button
           onClick={() => handleChangeDirection(sortState.direction === 'ASC' ? 'DESC' : 'ASC')}
-          className={`flex h-[32px] items-center gap-1 rounded-[8px] px-3 text-[11px] font-medium transition-all ${
+          className={`flex h-[30px] items-center gap-1 rounded-[8px] px-3 text-[11px] font-medium transition-all ease-in ${
             sortState.direction === 'ASC'
               ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200 hover:bg-blue-100'
               : 'bg-red-50 text-red-600 ring-1 ring-red-200 hover:bg-red-100'

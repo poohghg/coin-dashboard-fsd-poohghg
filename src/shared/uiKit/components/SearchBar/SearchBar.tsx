@@ -47,10 +47,16 @@ const SearchBar = ({
   };
 
   return (
-    <div className={cn('relative', className)}>
+    <div
+      className={cn(
+        'relative w-full rounded-lg border border-transparent bg-gray-800 transition-all duration-150',
+        'border-2 border-gray-700 focus-within:border-blue-500',
+        className
+      )}
+    >
       <button
         className={cn(
-          'absolute top-0 left-0 flex h-full w-10 items-center justify-center text-gray-500',
+          'absolute top-0 left-0 flex h-full w-10 items-center justify-center text-gray-400',
           searchIconClassName
         )}
         onClick={() => inputRef.current?.focus()}
@@ -60,7 +66,10 @@ const SearchBar = ({
       <input
         ref={inputRef}
         type="text"
-        className={`w-full rounded-lg bg-gray-800 py-2 pr-4 pl-10 text-sm text-white placeholder-gray-500 outline-none focus:border-transparent focus:ring-2 focus:ring-blue-500 ${inputClassName}`}
+        className={cn(
+          'w-full border-none bg-transparent py-2 pr-4 pl-10 text-sm text-white placeholder-gray-500 outline-none focus:ring-0',
+          inputClassName
+        )}
         placeholder={placeholder ?? 'Search...'}
         onChange={e => handleInputChange(e.target.value)}
         value={query}
