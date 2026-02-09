@@ -1,7 +1,7 @@
 import { TimeFrame } from '@/src/entities/candle';
 import React from 'react';
 
-const TIMEFRAMES: { label: string; value: TimeFrame }[] = [
+const TimeFrames: { label: string; value: TimeFrame }[] = [
   { label: '1분', value: 'minutes/1' },
   { label: '15분', value: 'minutes/15' },
   { label: '1시간', value: 'minutes/60' },
@@ -16,10 +16,10 @@ interface TimeFramesProps {
   setTimeFrame: (timeFrame: TimeFrame) => void;
 }
 
-export const TimeFrames = ({ timeFrame, setTimeFrame }: TimeFramesProps) => {
+export const ChartTimeFrames = ({ timeFrame, setTimeFrame }: TimeFramesProps) => {
   return (
     <div className="flex items-center gap-1 rounded-lg bg-gray-100">
-      {TIMEFRAMES.map(tf => (
+      {TimeFrames.map(tf => (
         <button
           key={tf.value}
           onClick={() => setTimeFrame(tf.value)}

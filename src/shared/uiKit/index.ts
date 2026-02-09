@@ -15,8 +15,9 @@ export {
   SeeMoreList,
   HighlightValue,
   ScrollIntoView,
+  FilterBar,
 } from './components';
 
 export type { BaseTab } from './components';
 
-export { Spacing, Button, FilterBar, RadioGroup, RadioGroupItem, Label } from './ui';
+export { Spacing, Button, RadioGroup, RadioGroupItem, Label } from './ui';
