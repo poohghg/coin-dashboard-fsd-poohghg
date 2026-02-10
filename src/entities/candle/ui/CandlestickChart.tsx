@@ -9,6 +9,7 @@ import {
   IChartApi,
   ISeriesApi,
   LogicalRange,
+  MouseEventParams,
   Time,
 } from 'lightweight-charts';
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
@@ -91,20 +92,28 @@ export const CandlestickChart = ({
   };
 
   const fitToContent = () => {
-    if (!chartRef.current || !seriesRef.current?.data().length) return;
+    if (!chartRef.current || !seriesRef.current?.data().length) {
+      return;
+    }
     chartRef.current.timeScale().fitContent();
     chartRef.current.priceScale('right').applyOptions({ autoScale: true });
   };
 
   const applyChartOptions = (options: DeepPartial<ChartOptions>) => {
-    if (!chartRef.current) return;
+    if (!chartRef.current) {
+      return;
+    }
     chartRef.current.applyOptions(options);
   };
 
   const setHeight = (callback: (chartContainer?: HTMLDivElement | null) => number | undefined) => {
-    if (!chartContainerRef.current || !chartRef.current) return;
+    if (!chartContainerRef.current || !chartRef.current) {
+      return;
+    }
     const height = callback(chartContainerRef.current);
-    if (!height) return;
+    if (!height) {
+      return;
+    }
     chartRef.current.resize(chartContainerRef.current.clientWidth, height);
   };
 
@@ -115,11 +124,14 @@ export const CandlestickChart = ({
   }));
 
   useEffect(() => {
-    if (!chartContainerRef.current) return;
+    if (!chartContainerRef.current) {
+      return;
+    }
 
+    const height = window.innerHeight - chartContainerRef.current.getBoundingClientRect().top - 20;
     const chart = createChart(chartContainerRef.current, {
       width: chartContainerRef.current.clientWidth,
-      height: window.innerHeight - chartContainerRef.current.getBoundingClientRect().top,
+      height: height,
       layout: {
         background: { type: ColorType.Solid, color: THEME.bgColor },
         textColor: THEME.textColor,
@@ -150,6 +162,12 @@ export const CandlestickChart = ({
 
     onChart?.(chart);
     onSeries?.(series);
+
+    return () => {
+      chart.remove();
+      chartRef.current = null;
+      seriesRef.current = null;
+    };
   }, []);
 
   useEffect(() => {
@@ -161,20 +179,22 @@ export const CandlestickChart = ({
   }, [isMinuteChart]);
 
   useEffect(() => {
-    if (!chartRef.current) return;
+    if (!chartRef.current) {
+      return;
+    }
     const chart = chartRef.current;
 
     const handleResize = () => {
       if (!onResize) {
         chart.resize(
           chartContainerRef.current!.clientWidth,
-          window.innerHeight - chartContainerRef.current!.getBoundingClientRect().top
+          window.innerHeight - chartContainerRef.current!.getBoundingClientRect().top - 20
         );
       } else {
         const size = onResize(chartContainerRef.current);
         chart.resize(
           size?.width ?? chartContainerRef.current!.clientWidth,
-          size?.height ?? chartContainerRef.current!.clientHeight
+          size?.height ?? window.innerHeight - chartContainerRef.current!.getBoundingClientRect().top - 20
         );
       }
     };
@@ -186,12 +206,14 @@ export const CandlestickChart = ({
   }, [onResize]);
 
   useEffect(() => {
-    if (!events?.onCrosshairMove || !seriesRef.current) return;
+    if (!events?.onCrosshairMove || !seriesRef.current) {
+      return;
+    }
 
     const chart = chartRef.current!;
     const series = seriesRef.current;
 
-    const handler = (param: any) => {
+    const handler = (param: MouseEventParams<Time>) => {
       if (!param.time || !param.point) {
         events.onCrosshairMove?.(null);
         return;
@@ -205,7 +227,9 @@ export const CandlestickChart = ({
   }, [events?.onCrosshairMove]);
 
   useEffect(() => {
-    if (!chartRef.current || !events?.onVisibleRangeChange) return;
+    if (!chartRef.current || !events?.onVisibleRangeChange) {
+      return;
+    }
 
     const chart = chartRef.current;
     const handler = (range: LogicalRange | null) => {

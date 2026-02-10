@@ -1,4 +1,4 @@
-import HomeTab from '@/src/pages/home/ui/HomeTab';
+import HomeTab from '@/src/page/home/ui/HomeTab';
 
 const HomePage = async () => {
   return (

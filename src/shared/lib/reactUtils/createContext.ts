@@ -1,9 +1,4 @@
-import {
-  Context,
-  createContext,
-  Provider,
-  useContext as ReactUseContext,
-} from "react";
+import { Context, createContext, Provider, useContext as ReactUseContext } from 'react';
 
 interface ContextOptions {
   name: string;
@@ -13,11 +8,7 @@ interface ContextOptions {
 
 export type ReturnContext<T> = [Provider<T>, () => T, Context<T>];
 
-export const createReactContext = <ContextType>({
-  name,
-  strict = true,
-  errorMessage,
-}: ContextOptions) => {
+export const createReactContext = <ContextType>({ name, strict = true, errorMessage }: ContextOptions) => {
   const Context = createContext<ContextType | undefined>(undefined);
 
   const useContext = () => {
@@ -26,7 +17,7 @@ export const createReactContext = <ContextType>({
     if (!context && strict) {
       const error = new Error(errorMessage || `${name} is undefined`);
 
-      error.name = "ContextError";
+      error.name = 'ContextError';
       Error.captureStackTrace?.(error, useContext);
       throw error;
     }

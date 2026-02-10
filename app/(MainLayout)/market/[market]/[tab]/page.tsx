@@ -17,4 +17,4 @@ export async function generateMetadata({ params }: { params: Promise<{ market: s
   });
 }
 
-export { MarketPage as default } from '@/src/pages/market';
+export { MarketPage as default } from '@/src/page/market';

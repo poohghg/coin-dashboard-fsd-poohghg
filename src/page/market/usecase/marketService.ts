@@ -54,17 +54,6 @@ class MarketService implements MarketUseCase {
       to,
     });
   };
-
-  // getCandlestickData = async (market: string, timeframe: TimeFrame, count?: number, to?: string) => {
-  //   const candles = await this.candleRepository.getCandles({
-  //     market,
-  //     timeframe,
-  //     count,
-  //     to,
-  //   });
-  //
-  //   return candles.map(candle => candle.candlestickData);
-  // };
 }
 
 const coinRepository = new CoinRepositoryImpl();

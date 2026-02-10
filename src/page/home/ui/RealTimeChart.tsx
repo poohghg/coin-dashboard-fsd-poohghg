@@ -89,7 +89,7 @@ const RealTimeChart = ({ coins, queryKey }: RealTimeChartProps) => {
     return <div className="py-10 text-center text-gray-500">해당 코인이 없습니다.</div>;
   }
 
-  const fetchedAt = new Date(coins[0]?.timestamp || Date.now());
+  const fetchedAt = new Date(coins[0]?.timestamp);
   return (
     <SeeMoreList data={coins} key={queryKey} pageSize={50} isInfiniteScroll>
       {data => (

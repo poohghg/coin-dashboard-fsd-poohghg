@@ -1,1 +1,1 @@
-export type KeyExtractor = (message: any) => string | null;
+export type KeyExtractor = (message: unknown) => string | null;

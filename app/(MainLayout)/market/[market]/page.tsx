@@ -1,1 +1,1 @@
-export { MarketPage as default } from '@/src/pages/market';
+export { MarketPage as default } from '@/src/page/market';

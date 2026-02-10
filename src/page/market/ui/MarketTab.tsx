@@ -1,7 +1,7 @@
 import { CoinDetail } from '@/src/entities/coin/model/type';
-import { MarketChart } from '@/src/pages/market/ui/MarketChart';
-import { MarketTabList } from '@/src/pages/market/ui/MarketTabList';
-import { OrderBookPanel } from '@/src/pages/market/ui/OrderBookPanel';
+import { MarketChart } from '@/src/page/market/ui/MarketChart';
+import { MarketTabList } from '@/src/page/market/ui/MarketTabList';
+import { OrderBookPanel } from '@/src/page/market/ui/OrderBookPanel';
 import { Spacing, Tabs, TabsPanel } from '@/src/shared/uiKit';
 
 interface MarketTabProps {

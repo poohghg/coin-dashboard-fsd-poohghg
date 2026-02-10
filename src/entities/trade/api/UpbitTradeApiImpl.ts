@@ -17,8 +17,12 @@ export class UpbitTradeApiImpl implements UpbitTradeApi {
 
     const builder = new FetchBuilder(url).params({ market, count });
 
-    if (to) builder.params({ to });
-    if (cursor) builder.params({ cursor });
+    if (to) {
+      builder.params({ to });
+    }
+    if (cursor) {
+      builder.params({ cursor });
+    }
 
     const res = await builder.build().request<UpbitTradeTickDTO[]>();
 

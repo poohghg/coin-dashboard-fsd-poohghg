@@ -1,7 +1,7 @@
 import { TimeFrame } from '@/src/entities/candle';
 import React from 'react';
 
-const TimeFrames: { label: string; value: TimeFrame }[] = [
+const TimeFrames: Array<{ label: string; value: TimeFrame }> = [
   { label: '1분', value: 'minutes/1' },
   { label: '15분', value: 'minutes/15' },
   { label: '1시간', value: 'minutes/60' },

@@ -2,23 +2,27 @@
 
 import { ReactNode, useEffect, useRef } from 'react';
 
-interface HighlightProps {
-  value: any;
+interface HighlightProps<T> {
+  value: T;
   children: ReactNode;
   className: string;
   animationClassName: string;
 }
 
-export const HighlightValue = ({ value, children, className, animationClassName }: HighlightProps) => {
+export const HighlightValue = <T,>({ value, children, className, animationClassName }: HighlightProps<T>) => {
   const ref = useRef<HTMLDivElement>(null);
   const prevRef = useRef(value);
 
   useEffect(() => {
-    if (Object.is(prevRef.current, value)) return;
+    if (Object.is(prevRef.current, value)) {
+      return;
+    }
 
     prevRef.current = value;
     const node = ref.current;
-    if (!node || !animationClassName) return;
+    if (!node || !animationClassName) {
+      return;
+    }
 
     const classes = animationClassName.split(' ').filter(Boolean);
 

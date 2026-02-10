@@ -59,7 +59,9 @@ export class OrderbookPolicy {
   }
 
   getPriceUnit(price: number): number {
-    if (price < 0) return 0;
+    if (price < 0) {
+      return 0;
+    }
 
     const rule = PRICE_UNIT_RULES.find(r => r.min <= price && (r.max === undefined || price < r.max));
 

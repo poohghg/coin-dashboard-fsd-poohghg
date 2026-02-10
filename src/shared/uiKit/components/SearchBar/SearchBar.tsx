@@ -3,7 +3,7 @@
 import { cn } from '@/src/shared/uiKit';
 import { debounce } from 'lodash';
 import { SearchIcon } from 'lucide-react';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 interface SearchBarProps {
   value: string;
@@ -30,11 +30,12 @@ const SearchBar = ({
   const [localQuery, setLocalQuery] = useState(value);
   const query = useDebounce ? localQuery : value;
 
-  const debouncedSetQuery = useCallback(
-    debounce((newQuery: string) => {
-      onInputChange(newQuery);
-    }, debounceDelay),
-    []
+  const debouncedSetQuery = useMemo(
+    () =>
+      debounce((newQuery: string) => {
+        onInputChange(newQuery);
+      }, debounceDelay),
+    [onInputChange, debounceDelay]
   );
 
   const handleInputChange = (newQuery: string) => {

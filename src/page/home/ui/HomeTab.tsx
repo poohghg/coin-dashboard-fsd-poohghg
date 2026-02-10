@@ -1,6 +1,6 @@
-import { CoinListFetcher } from '@/src/pages/home/ui/CoinListFetcher';
-import HomeTabList from '@/src/pages/home/ui/HomeTabList';
-import HomeTabPannes from '@/src/pages/home/ui/HomeTabPannes';
+import { CoinListFetcher } from '@/src/page/home/ui/CoinListFetcher';
+import HomeTabList from '@/src/page/home/ui/HomeTabList';
+import HomeTabPannes from '@/src/page/home/ui/HomeTabPannes';
 import { Spacing, Tabs } from '@/src/shared/uiKit';
 
 const HomeTab = () => {

@@ -1,12 +1,12 @@
-import { MarketTabKeys } from '@/src/pages/market/constant';
-import { MarketHeader } from '@/src/pages/market/ui/MarketHeader';
-import { MarketTab } from '@/src/pages/market/ui/MarketTab';
-import { marketService } from '@/src/pages/market/usecase/marketService';
+import { MarketTabKeys } from '@/src/page/market/constant';
+import { MarketHeader } from '@/src/page/market/ui/MarketHeader';
+import { MarketTab } from '@/src/page/market/ui/MarketTab';
+import { marketService } from '@/src/page/market/usecase/marketService';
 import { ServerFetcher } from '@/src/shared/uiKit';
 import { notFound, redirect } from 'next/navigation';
 
 const MarketPage = async ({ params }: { params: Promise<{ market: string; tab: string }> }) => {
-  let { market, tab } = await params;
+  const { market, tab } = await params;
 
   if (!tab) {
     redirect(`/market/${market}/orderbook`);

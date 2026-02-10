@@ -42,7 +42,9 @@ const ToastItem = ({ type, id, message, delay }: Toast) => {
         animateClasses
       )}
       onAnimationEnd={() => {
-        if (isClose) toasts.close(id);
+        if (isClose) {
+          toasts.close(id);
+        }
       }}
     >
       <div className="flex flex-col gap-1">

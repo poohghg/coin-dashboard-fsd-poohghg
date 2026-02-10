@@ -1,6 +1,6 @@
 'use client';
 
-import { MarketTabs } from '@/src/pages/market/constant';
+import { MarketTabs } from '@/src/page/market/constant';
 import { TabsList, TabsListActive, TabsTrigger } from '@/src/shared/uiKit';
 
 interface MarketTabListProps {

@@ -26,6 +26,7 @@ export const useTradeTicks = (initialTicks: TradeTick[], liveTradeTicks: TradeTi
 
   useEffect(() => {
     if (liveTradeTicks) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       addTick(liveTradeTicks);
     }
   }, [liveTradeTicks, addTick]);

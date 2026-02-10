@@ -2,9 +2,9 @@
 
 import { Coin } from '@/src/entities/coin';
 import { FavoritesCoins, useSearchCoins, useSortCoins } from '@/src/features/coin';
-import { HomeTabs } from '@/src/pages/home/constant';
-import { ListFilter } from '@/src/pages/home/ui/ListFilter';
-import RealTimeChart from '@/src/pages/home/ui/RealTimeChart';
+import { HomeTabs } from '@/src/page/home/constant';
+import { ListFilter } from '@/src/page/home/ui/ListFilter';
+import RealTimeChart from '@/src/page/home/ui/RealTimeChart';
 import { If, SearchBar, TabsPanel } from '@/src/shared/uiKit';
 
 interface HomeTabPanelsProps {

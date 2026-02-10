@@ -1,6 +1,6 @@
 import { Candle, TimeFrame } from '@/src/entities/candle';
 import { CandleQueryKeys } from '@/src/entities/candle/queryOption/queryOption';
-import { marketService } from '@/src/pages/market/usecase/marketService';
+import { marketService } from '@/src/page/market/usecase/marketService';
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 
 const staleTimeGroup = ['days', 'weeks', 'months'];
@@ -27,7 +27,9 @@ export const useCandlestickInfiniteQuery = ({ market, timeframe, count = 200 }: 
       }
     },
     getNextPageParam: firstPage => {
-      if (firstPage.length < count) return undefined;
+      if (firstPage.length < count) {
+        return undefined;
+      }
       const oldestCandle = firstPage[firstPage.length - 1];
       return oldestCandle.candle_date_time_utc;
     },

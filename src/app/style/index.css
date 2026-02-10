@@ -1,6 +1,6 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@import "./_animations.css";
-@import "./_base.css";
-@import "./_spacing.css";
-@import "./_typography.css";
+@import './_animations.css';
+@import './_base.css';
+@import './_spacing.css';
+@import './_typography.css';

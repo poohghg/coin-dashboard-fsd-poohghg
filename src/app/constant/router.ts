@@ -1,4 +1,4 @@
-import { MarketTabKey } from '@/src/pages/market/model/type';
+import { MarketTabKey } from '@/src/page/market/model/type';
 
 export const ROUTERS = {
   home: () => '/',

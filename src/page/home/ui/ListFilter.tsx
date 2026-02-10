@@ -2,10 +2,10 @@ import { CoinSortableField } from '@/src/features/coin';
 import { yieldToMain } from '@/src/shared/lib/utils';
 import { FilterBar } from '@/src/shared/uiKit';
 
-const Filters: {
+const Filters: Array<{
   value: CoinSortableField;
   label: string;
-}[] = [
+}> = [
   { value: 'korean_name', label: '코인명' },
   { value: 'trade_price', label: '현재가' },
   { value: 'signed_change_rate', label: '전일대비' },
@@ -36,7 +36,9 @@ export const ListFilter = ({ sortState, onChangeSortState, onChangeDirection }: 
   };
 
   const toTop = async () => {
-    if (window.scrollY < 150) return;
+    if (window.scrollY < 150) {
+      return;
+    }
     await yieldToMain();
     window.scrollTo({
       top: TOP_OFFSET,

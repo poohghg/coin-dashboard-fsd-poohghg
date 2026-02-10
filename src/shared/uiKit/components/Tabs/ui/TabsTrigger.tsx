@@ -22,7 +22,9 @@ export const TabsTrigger = ({
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     setSelectedKey(tabKey);
-    if (onClick) onClick(e);
+    if (onClick) {
+      onClick(e);
+    }
   };
 
   const Component = asChild ? Slot : 'button';

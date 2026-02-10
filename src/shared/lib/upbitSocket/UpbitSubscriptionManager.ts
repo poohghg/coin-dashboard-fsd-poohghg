@@ -39,10 +39,14 @@ export class UpbitSubscriptionManager {
     codes.forEach(code => {
       const count = map.get(code) || 0;
       map.set(code, count + 1);
-      if (count === 0) changed = true;
+      if (count === 0) {
+        changed = true;
+      }
     });
 
-    if (changed) this.scheduleUpdate();
+    if (changed) {
+      this.scheduleUpdate();
+    }
   }
 
   public remove(type: UpbitSocketType, codes: string[]) {
@@ -61,14 +65,18 @@ export class UpbitSubscriptionManager {
       }
     });
 
-    if (changed) this.scheduleUpdate();
+    if (changed) {
+      this.scheduleUpdate();
+    }
   }
 
   public clear() {
     this.subscriptions.ticker.clear();
     this.subscriptions.orderbook.clear();
     this.subscriptions.trade.clear();
-    if (this.updateTimeout) clearTimeout(this.updateTimeout);
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout);
+    }
   }
 
   private scheduleUpdate() {
@@ -88,7 +96,9 @@ export class UpbitSubscriptionManager {
   }
 
   private flushSubscriptions() {
-    if (!this.socketSender) return;
+    if (!this.socketSender) {
+      return;
+    }
 
     const payload: any[] = [{ ticket: uuidv4() }];
     let hasSubscription = false;

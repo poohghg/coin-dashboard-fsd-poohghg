@@ -1,6 +1,6 @@
 import { CandleQueryOptions } from '@/src/entities/candle';
 import { CandleQuery } from '@/src/entities/candle/api/params';
-import { marketService } from '@/src/pages/market/usecase/marketService';
+import { marketService } from '@/src/page/market/usecase/marketService';
 import { useQuery } from '@tanstack/react-query';
 
 const useCandlestickDataQuery = ({ market, timeframe, count, to }: CandleQuery) => {

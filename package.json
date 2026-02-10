@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "eslint:fix": "eslint --fix . --cache",
+    "prettier:fix": "prettier --write ."
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.8",
@@ -29,6 +31,8 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4",
     "@tanstack/react-query-devtools": "^5.91.3",
     "@types/lodash": "^4.17",
@@ -40,7 +44,7 @@
     "@typescript-eslint/parser": "^8.46.3",
     "babel-plugin-react-compiler": "1.0.0",
     "class-variance-authority": "^0.7.1",
-    "eslint": "^10.0.0",
+    "eslint": "^9.39.1",
     "eslint-config-next": "16.1.6",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-alias": "^1.1.2",

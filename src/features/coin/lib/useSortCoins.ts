@@ -21,8 +21,12 @@ export const useSortCoins = (coins: Coin[]) => {
       const aValue = a[sort];
       const bValue = b[sort];
 
-      if (aValue < bValue) return direction === 'ASC' ? -1 : 1;
-      if (aValue > bValue) return direction === 'ASC' ? 1 : -1;
+      if (aValue < bValue) {
+        return direction === 'ASC' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return direction === 'ASC' ? 1 : -1;
+      }
 
       return 0;
     });

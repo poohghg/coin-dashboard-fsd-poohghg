@@ -9,7 +9,7 @@ interface SeverFetcherProps<S> {
 const ServerFetcher = async <S,>({ fetcher, children, errorComponent }: SeverFetcherProps<S>) => {
   try {
     const res = await fetcher();
-    return <>{children(res)}</>;
+    return children(res);
   } catch (error) {
     console.error('ServerFetcher error:', error);
     // 비동기 통신 자체의 실패나 throw된 res를 상위로 전파

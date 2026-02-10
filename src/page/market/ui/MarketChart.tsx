@@ -4,7 +4,7 @@ import { ChartTimeFrames, TimeFrame, useChartData, useLiveCandle } from '@/src/e
 import { LegendData } from '@/src/entities/candle/model/type';
 import { CandlestickChart, ChartCommands } from '@/src/entities/candle/ui/CandlestickChart';
 import { ChartLegend } from '@/src/entities/candle/ui/ChartLegend';
-import { useCandlestickInfiniteQuery } from '@/src/pages/market/query/useCandlestickInfiniteQuery';
+import { useCandlestickInfiniteQuery } from '@/src/page/market/query/useCandlestickInfiniteQuery';
 import { useThrottledCallback } from '@/src/shared/lib/hooks';
 import { CandlestickData, LogicalRange } from 'lightweight-charts';
 import React, { useEffect, useRef, useState } from 'react';
@@ -40,7 +40,9 @@ export const MarketChart = ({ marketCode }: ChartProps) => {
   });
 
   const throttledLoadMore = useThrottledCallback(() => {
-    if (isFetchingPreviousPage || !hasNextPage) return;
+    if (isFetchingPreviousPage || !hasNextPage) {
+      return;
+    }
     fetchNextPage();
   }, 1000);
 
@@ -68,11 +70,9 @@ export const MarketChart = ({ marketCode }: ChartProps) => {
   };
 
   useEffect(() => {
-    setLegendData(null);
-  }, [timeFrame]);
-
-  useEffect(() => {
-    if (!chartCommandsRef.current) return;
+    if (!chartCommandsRef.current) {
+      return;
+    }
     chartCommandsRef.current.fitToContent();
   }, [timeFrame]);
 

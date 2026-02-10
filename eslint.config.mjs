@@ -1,31 +1,18 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-plugin-prettier/recommended';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const eslintConfig = defineConfig([
+  // 1. Next.js Core Web Vitals 및 TypeScript 설정 로드
+  ...nextVitals,
+  ...nextTs,
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-});
-
-const eslintConfig = [
-  // 1. Next.js 및 TypeScript 기본 설정 로드 (Flat Config 호환 모드)
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-
-  // 2. Prettier 설정 적용
+  // 2. Prettier 플러그인 규칙 추가 (항상 마지막 즈음에 위치)
   prettier,
 
   {
-    // 3. 무시할 경로 설정
-    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
-  },
-
-  {
-    // 4. 상세 규칙 및 환경 설정
+    // 3. 상세 규칙 및 환경 설정
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     settings: {
       react: { version: 'detect' },
@@ -44,7 +31,8 @@ const eslintConfig = [
       'prettier/prettier': 'error',
 
       // TypeScript 관련
-      '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
+      '@typescript-eslint/no-unused-vars': ['warn', { ignoreRestSiblings: true }],
+      '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
       '@typescript-eslint/member-ordering': [
         'error',
@@ -77,11 +65,14 @@ const eslintConfig = [
       'no-warning-comments': ['warn', { terms: ['TODO', 'FIXME', 'XXX', 'BUG'], location: 'anywhere' }],
       'prefer-const': 'error',
       'no-var': 'error',
-      curly: ['error', 'all'],
+      curly: ['warn', 'all'],
       eqeqeq: ['error', 'always', { null: 'ignore' }],
       'import/no-duplicates': 'error',
     },
   },
-];
+
+  // 4. 전역 무시 설정 (eslint-config-next의 기본값을 덮어씌움)
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts', 'node_modules/**']),
+]);
 
 export default eslintConfig;

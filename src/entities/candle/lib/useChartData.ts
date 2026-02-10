@@ -1,7 +1,7 @@
 import { Candle, TimeFrame } from '@/src/entities/candle';
 import { addHours, startOfDay, startOfMonth, startOfWeek } from 'date-fns';
 import { OhlcData, UTCTimestamp } from 'lightweight-charts';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const normalizeSocketTime = (timeFrame: TimeFrame, liveCandle: Candle): number => {
   const socketTime = liveCandle.candlestickData.time as number;
@@ -21,7 +21,7 @@ const normalizeSocketTime = (timeFrame: TimeFrame, liveCandle: Candle): number =
       const mondayZero = startOfWeek(date, { weekStartsOn: 1 });
       const mondayNine = addHours(mondayZero, 9);
 
-      // 3. [예외 처리] 만약 현재 시간이 월요일 00:00 ~ 08:59 사이라면,
+      //    [예외 처리] 만약 현재 시간이 월요일 00:00 ~ 08:59 사이라면,
       //    이 데이터는 "이번 주 봉"이 아니라 "저번 주 봉"에 포함되어야 함.
       //    (이미 startOfWeek는 오늘이 월요일이면 이번주 월요일 0시를 뱉으므로,
       //     단순히 +9시간을 하면 미래(오늘 9시)가 되어버림.
@@ -55,20 +55,28 @@ interface UseChartDataProps {
 }
 
 export const useChartData = ({ candles, liveCandle, timeFrame }: UseChartDataProps) => {
-  const [chartData, setChartData] = useState<OhlcData<UTCTimestamp>[]>([]);
-
-  useEffect(() => {
-    if (candles && 0 < candles.length) {
-      const initialData = [...candles].map(c => c.candlestickData).reverse();
-      setChartData(initialData);
+  const initialData = useMemo(() => {
+    if (candles && candles.length > 0) {
+      return [...candles].map(c => c.candlestickData).reverse();
     }
+    return [];
   }, [candles]);
 
+  const [chartData, setChartData] = useState<Array<OhlcData<UTCTimestamp>>>(initialData);
+
   useEffect(() => {
-    if (!liveCandle) return;
+    setChartData(initialData);
+  }, [initialData]);
+
+  useEffect(() => {
+    if (!liveCandle) {
+      return;
+    }
 
     setChartData(prevData => {
-      if (prevData.length === 0) return prevData;
+      if (prevData.length === 0) {
+        return prevData;
+      }
 
       const newData = [...prevData];
       const lastCandle = newData[newData.length - 1];

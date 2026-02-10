@@ -1,6 +1,6 @@
 'use client';
 
-import { HomeTabs } from '@/src/pages/home/constant';
+import { HomeTabs } from '@/src/page/home/constant';
 import { TabsList, TabsListActive, TabsTrigger } from '@/src/shared/uiKit';
 
 const HomeTabList = () => {

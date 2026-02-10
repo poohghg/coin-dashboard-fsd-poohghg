@@ -10,21 +10,21 @@ export const Navbar = () => {
   return (
     <nav className="flex items-center space-x-1">
       <Link
-        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors hover: ${
+        className={`hover: flex items-center space-x-2 rounded-lg px-4 py-2 transition-colors ${
           pathName === '/' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-200'
         }`}
         href="/"
       >
-        <Home className="w-5 h-5" />
+        <Home className="h-5 w-5" />
         <span className="font-medium">홈</span>
       </Link>
       <Link
-        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+        className={`flex items-center space-x-2 rounded-lg px-4 py-2 transition-colors ${
           pathName === '/account' ? 'bg-blue-50 text-blue-600' : 'text-gray-600 hover:bg-gray-200'
         }`}
         href="/account"
       >
-        <Wallet className="w-5 h-5" />
+        <Wallet className="h-5 w-5" />
         <span className="font-medium">내 계좌</span>
       </Link>
     </nav>

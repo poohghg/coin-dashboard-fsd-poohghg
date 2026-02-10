@@ -3,9 +3,7 @@
 import { MergeElementProps } from '@/src/shared/type/reactElement';
 import { forwardRef } from 'react';
 
-interface TabsListProps {}
-
-const TabsList = forwardRef<HTMLDivElement, MergeElementProps<'div', {}>>(({ className, ...props }, ref) => {
+const TabsList = forwardRef<HTMLDivElement, MergeElementProps<'div'>>(({ className, ...props }, ref) => {
   return (
     <div ref={ref} role="tablist" className={`relative flex overflow-y-auto ${className}`} {...props}>
       {props.children}

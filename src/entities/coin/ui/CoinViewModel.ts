@@ -13,13 +13,19 @@ export class CoinViewModel {
   });
 
   static getChangeRate(price: number, closing_price: number) {
-    if (closing_price === 0) return 0;
+    if (closing_price === 0) {
+      return 0;
+    }
     return (price - closing_price) / closing_price;
   }
 
   static getChangeType(price: number, closing_price: number): CoinChangeType {
-    if (price > closing_price) return 'RISE';
-    if (price < closing_price) return 'FALL';
+    if (price > closing_price) {
+      return 'RISE';
+    }
+    if (price < closing_price) {
+      return 'FALL';
+    }
     return 'EVEN';
   }
 
@@ -72,14 +78,22 @@ export class CoinViewModel {
   }
 
   static changeColorClass(type: CoinChangeType): string {
-    if (type === 'RISE') return `text-red-500`;
-    if (type === 'FALL') return `text-blue-500`;
+    if (type === 'RISE') {
+      return `text-red-500`;
+    }
+    if (type === 'FALL') {
+      return `text-blue-500`;
+    }
     return `text-gray-500`;
   }
 
   static changeAnimationClass(type: CoinChangeType): string {
-    if (type === 'RISE') return `animate-highlight-up`;
-    if (type === 'FALL') return `animate-highlight-down`;
+    if (type === 'RISE') {
+      return `animate-highlight-up`;
+    }
+    if (type === 'FALL') {
+      return `animate-highlight-down`;
+    }
     return ``;
   }
 }

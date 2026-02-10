@@ -13,7 +13,9 @@ export class SocketTransport {
   private messageQueue: string[] = [];
 
   constructor(private options: TransportOptions) {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {
+      return;
+    }
     this.connect();
   }
 
@@ -44,7 +46,9 @@ export class SocketTransport {
     if (this.socket) {
       this.handleTransportClose(new CloseEvent('close', { code: 1000, reason: 'Manual disconnect' }), false);
     }
-    if (this.reconnectTimeoutId) clearTimeout(this.reconnectTimeoutId);
+    if (this.reconnectTimeoutId) {
+      clearTimeout(this.reconnectTimeoutId);
+    }
     this.messageQueue = [];
   }
 
@@ -63,7 +67,9 @@ export class SocketTransport {
     this.socket.onopen = () => {
       this.log('Connected');
       this.reconnectAttempt = 0;
-      if (this.reconnectTimeoutId) clearTimeout(this.reconnectTimeoutId);
+      if (this.reconnectTimeoutId) {
+        clearTimeout(this.reconnectTimeoutId);
+      }
       this.flushMessageQueue();
     };
 
@@ -89,9 +95,11 @@ export class SocketTransport {
   }
 
   private flushMessageQueue() {
-    if (this.messageQueue.length === 0) return;
+    if (this.messageQueue.length === 0) {
+      return;
+    }
 
-    let index = 0;
+    const index = 0;
     while (this.messageQueue.length > 0 && this.socket?.readyState === WebSocket.OPEN) {
       const msg = this.messageQueue.shift();
       if (msg) {
@@ -99,14 +107,18 @@ export class SocketTransport {
           this.socket!.send(msg);
         }, index * 1000);
       } else {
-        if (msg) this.messageQueue.unshift(msg);
+        if (msg) {
+          this.messageQueue.unshift(msg);
+        }
         break;
       }
     }
   }
 
   private scheduleReconnect() {
-    if (this.reconnectTimeoutId) clearTimeout(this.reconnectTimeoutId);
+    if (this.reconnectTimeoutId) {
+      clearTimeout(this.reconnectTimeoutId);
+    }
 
     const delay = Math.min(1000 * 2 ** this.reconnectAttempt, this.options.maxReconnectDelay);
 
@@ -119,6 +131,8 @@ export class SocketTransport {
   }
 
   private log(...args: any[]) {
-    if (this.options.debug) console.log(`[SocketTransport]`, ...args);
+    if (this.options.debug) {
+      console.log(`[SocketTransport]`, ...args);
+    }
   }
 }

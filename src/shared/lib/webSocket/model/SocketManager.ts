@@ -131,7 +131,9 @@ export class SocketManager {
   }
 
   private updateStore(key: string, data: any) {
-    if (!this.listeners.has(key)) return;
+    if (!this.listeners.has(key)) {
+      return;
+    }
 
     if (!this.updateQueue.has(key)) {
       this.updateQueue.set(key, []);

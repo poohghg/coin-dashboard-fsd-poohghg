@@ -1,4 +1,4 @@
 @theme {
-    --spacing-main-header: 52px;
-    --spacing-content-top: calc(var(--spacing-main-header) + 64px);
+  --spacing-main-header: 52px;
+  --spacing-content-top: calc(var(--spacing-main-header) + 64px);
 }

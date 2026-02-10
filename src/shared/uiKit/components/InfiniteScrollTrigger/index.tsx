@@ -17,10 +17,12 @@ const InfiniteScrollTrigger = ({
 }: InfiniteScrollTriggerProps) => {
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
-  const isVisible = !isLoading && !!hasNextPage;
+  const isVisible = !isLoading && Boolean(hasNextPage);
 
   useEffect(() => {
-    if (!triggerRef.current || isLoading || !hasNextPage) return;
+    if (!triggerRef.current || isLoading || !hasNextPage) {
+      return;
+    }
 
     const callBack = (entries: IntersectionObserverEntry[]) => {
       entries.forEach(entry => {
@@ -50,7 +52,7 @@ const InfiniteScrollTrigger = ({
           style={{ height: '1px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
         />
       </If>
-      <If condition={!!isLoading}>
+      <If condition={Boolean(isLoading)}>
         <LoadCircleIcon />
       </If>
     </>

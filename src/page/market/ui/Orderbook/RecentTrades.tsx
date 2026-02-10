@@ -6,7 +6,9 @@ import { useLiveTradeTick } from '@/src/entities/trade/lib/useLiveTradeTick';
 import React from 'react';
 
 const calculateTradingIntensity = (ticks: TradeTick[]): number => {
-  if (ticks.length === 0) return 0;
+  if (ticks.length === 0) {
+    return 0;
+  }
 
   const { totalBidVolume, totalAskVolume } = ticks.reduce(
     (acc, tick) => {
@@ -20,7 +22,9 @@ const calculateTradingIntensity = (ticks: TradeTick[]): number => {
     { totalBidVolume: 0, totalAskVolume: 0 }
   );
 
-  if (totalAskVolume === 0) return 100.0;
+  if (totalAskVolume === 0) {
+    return 100.0;
+  }
 
   //체결강도 공식: (매수체결량 / 매도체결량) * 100
   const intensity = (totalBidVolume / totalAskVolume) * 100;

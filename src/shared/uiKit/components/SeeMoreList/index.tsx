@@ -37,11 +37,10 @@ export const SeeMoreList = <T,>({
           {isInfiniteScroll ? (
             <InfiniteScrollTrigger onIntersect={handleSeeMore} hasNextPage={hasMore} />
           ) : (
-            <div className="relative flex py-5 items-center">
+            <div className="relative flex items-center py-5">
               <div className="flex-grow border-t border-gray-300"></div>
               <Button
-                className="flex-shrink mx-2 border-gray-300 hover:border-gray-500 hover:bg-gray-200 focus:ring-0
-                "
+                className="mx-2 flex-shrink border-gray-300 hover:border-gray-500 hover:bg-gray-200 focus:ring-0"
                 size={'sm'}
                 variant={'outline'}
                 onClick={handleSeeMore}
