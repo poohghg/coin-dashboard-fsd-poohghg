@@ -17,6 +17,7 @@ export const OrderBookPanel = ({ coin }: OrderBookPanelProps) => {
         <OrderBook
           AskOrderBooks={
             <OrderBookList
+              key={'ask-orderbook'}
               type="ASK"
               orderBook={orderBook}
               prevClose={coin.prev_closing_price}
@@ -25,6 +26,7 @@ export const OrderBookPanel = ({ coin }: OrderBookPanelProps) => {
           }
           BidOrderBooks={
             <OrderBookList
+              key={'bid-orderbook'}
               type="BID"
               orderBook={orderBook}
               prevClose={coin.prev_closing_price}

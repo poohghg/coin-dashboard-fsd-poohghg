@@ -70,10 +70,9 @@ export const MarketChart = ({ marketCode }: ChartProps) => {
   };
 
   useEffect(() => {
-    if (!chartCommandsRef.current) {
-      return;
+    if (chartCommandsRef.current) {
+      chartCommandsRef.current.fitToContent();
     }
-    chartCommandsRef.current.fitToContent();
   }, [timeFrame]);
 
   return (

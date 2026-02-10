@@ -31,7 +31,7 @@ export const MarketHeader = ({ coin }: DetailHeaderProps) => {
           </div>
         </div>
       </div>
-      <FavoriteCoinButton coinId={coin.market} starClassName="h-6 w-6" />
+      <FavoriteCoinButton coinId={coin.symbol} starClassName="h-6 w-6" />
     </section>
   );
 };

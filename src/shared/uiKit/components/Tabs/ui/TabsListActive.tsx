@@ -40,7 +40,7 @@ const TabsListActive = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [selectedKey]);
 
   return (
     <div

@@ -5,14 +5,25 @@ import { useCallback } from 'react';
 
 interface ScrollIntoViewProps {
   children?: React.ReactNode;
+  scrollCallback?: (el?: HTMLDivElement) => void;
 }
 
-export const ScrollIntoView = ({ children, ...rest }: MergeElementProps<'div', ScrollIntoViewProps>) => {
-  const onScrollIntoView = useCallback((el: HTMLDivElement | null) => {
-    if (el) {
-      el.scrollIntoView({ behavior: 'instant', block: 'center' });
-    }
-  }, []);
+export const ScrollIntoView = ({
+  children,
+  scrollCallback,
+  ...rest
+}: MergeElementProps<'div', ScrollIntoViewProps>) => {
+  const onScrollIntoView = useCallback(
+    (el: HTMLDivElement | null) => {
+      if (el) {
+        el.scrollIntoView({ behavior: 'instant', block: 'center' });
+        requestAnimationFrame(() => {
+          scrollCallback?.(el);
+        });
+      }
+    },
+    [scrollCallback]
+  );
 
   return (
     <div ref={onScrollIntoView} {...rest}>

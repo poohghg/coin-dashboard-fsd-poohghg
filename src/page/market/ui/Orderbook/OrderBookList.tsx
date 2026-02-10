@@ -117,7 +117,7 @@ export const OrderBookList = ({ type, orderBook, prevClose, lastLiveTradePrice }
       {units.map((u, idx) => {
         return (
           <OrderBookRow
-            key={type + '-' + idx}
+            key={type + '-' + idx + '-' + (type === 'ASK' ? u.askPrice : u.bidPrice)}
             type={type}
             unit={type === 'ASK' ? { price: u.askPrice, size: u.askSize } : { price: u.bidPrice, size: u.bidSize }}
             closePrice={prevClose}
