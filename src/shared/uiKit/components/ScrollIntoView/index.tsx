@@ -15,12 +15,21 @@ export const ScrollIntoView = ({
 }: MergeElementProps<'div', ScrollIntoViewProps>) => {
   const onScrollIntoView = useCallback(
     (el: HTMLDivElement | null) => {
-      if (el) {
-        el.scrollIntoView({ behavior: 'instant', block: 'center' });
-        requestAnimationFrame(() => {
-          scrollCallback?.(el);
-        });
-      }
+      if (!el) return;
+
+      el.scrollIntoView({ behavior: 'instant', block: 'center' });
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            scrollCallback?.(el);
+            observer.disconnect();
+          }
+        },
+        { threshold: 1.0 }
+      );
+
+      observer.observe(el);
     },
     [scrollCallback]
   );

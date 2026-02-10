@@ -17,7 +17,11 @@ export const OrderBook = ({ AskOrderBooks, BidOrderBooks, PriceInfo, RecentTrade
 
   const scrollCallback = useCallback(() => {
     if (containerRef.current) {
-      containerRef.current.classList.add('animate-fade-in');
+      requestAnimationFrame(() => {
+        if (containerRef.current) {
+          containerRef.current.classList.add('animate-fade-in');
+        }
+      });
     }
   }, []);
 

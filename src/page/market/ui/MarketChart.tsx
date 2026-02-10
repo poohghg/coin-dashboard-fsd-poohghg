@@ -7,13 +7,14 @@ import { ChartLegend } from '@/src/entities/candle/ui/ChartLegend';
 import { useCandlestickInfiniteQuery } from '@/src/page/market/query/useCandlestickInfiniteQuery';
 import { useThrottledCallback } from '@/src/shared/lib/hooks';
 import { CandlestickData, LogicalRange } from 'lightweight-charts';
+import dynamic from 'next/dynamic';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ChartProps {
   marketCode: string;
 }
 
-export const MarketChart = ({ marketCode }: ChartProps) => {
+const MarketChartC = ({ marketCode }: ChartProps) => {
   const chartCommandsRef = useRef<ChartCommands>(null);
   const [timeFrame, setTimeFrame] = useState<TimeFrame>('days');
   const [legendData, setLegendData] = useState<LegendData | null>(null);
@@ -93,3 +94,7 @@ export const MarketChart = ({ marketCode }: ChartProps) => {
     </div>
   );
 };
+
+export const MarketChart = dynamic(() => Promise.resolve(MarketChartC), {
+  ssr: false,
+});
