@@ -55,26 +55,34 @@ const SearchBar = ({
         className
       )}
     >
-      <button
-        className={cn(
-          'absolute top-0 left-0 flex h-full w-10 items-center justify-center text-gray-400',
-          searchIconClassName
-        )}
-        onClick={() => inputRef.current?.focus()}
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          inputRef.current?.blur();
+        }}
       >
-        <SearchIcon className={'h-5 w-5'} />
-      </button>
-      <input
-        ref={inputRef}
-        type="text"
-        className={cn(
-          'w-full border-none bg-transparent py-2 pr-4 pl-10 text-sm text-white placeholder-gray-500 outline-none focus:ring-0',
-          inputClassName
-        )}
-        placeholder={placeholder ?? 'Search...'}
-        onChange={e => handleInputChange(e.target.value)}
-        value={query}
-      />
+        <button
+          type="button"
+          className={cn(
+            'absolute top-0 left-0 flex h-full w-10 items-center justify-center text-gray-400',
+            searchIconClassName
+          )}
+          onClick={() => inputRef.current?.focus()}
+        >
+          <SearchIcon className={'h-5 w-5'} />
+        </button>
+        <input
+          ref={inputRef}
+          type="text"
+          className={cn(
+            'w-full border-none bg-transparent py-2 pr-4 pl-10 text-sm text-white placeholder-gray-500 outline-none focus:ring-0',
+            inputClassName
+          )}
+          placeholder={placeholder ?? 'Search...'}
+          onChange={e => handleInputChange(e.target.value)}
+          value={query}
+        />
+      </form>
     </div>
   );
 };

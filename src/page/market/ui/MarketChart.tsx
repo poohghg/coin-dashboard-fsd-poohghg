@@ -97,4 +97,5 @@ const MarketChartC = ({ marketCode }: ChartProps) => {
 
 export const MarketChart = dynamic(() => Promise.resolve(MarketChartC), {
   ssr: false,
+  loading: () => <div className="h-[10px] w-full bg-white" />,
 });
