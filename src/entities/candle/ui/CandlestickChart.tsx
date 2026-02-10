@@ -216,5 +216,5 @@ export const CandlestickChart = ({
     return () => chart.timeScale().unsubscribeVisibleLogicalRangeChange(handler);
   }, [events?.onVisibleRangeChange]);
 
-  return <div ref={chartContainerRef} className="h-full w-full" />;
+  return <div ref={chartContainerRef} className="w-full" />;
 };
