@@ -24,7 +24,7 @@ export const OrderBook = ({ AskOrderBooks, BidOrderBooks, PriceInfo, RecentTrade
       <ScrollIntoView className={'flex-shink-0 h-[1px] bg-gray-300'} />
       <div className="flex w-full">
         {/* 체결창 */}
-        <div className={`w-[${SIDE_WIDTH}]`} />
+        <div className={`w-[${SIDE_WIDTH}]`}>{RecentTrades}</div>
         {/* 매수 리스트 */}
         {BidOrderBooks}
       </div>

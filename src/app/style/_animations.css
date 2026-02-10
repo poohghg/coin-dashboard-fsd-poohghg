@@ -1,0 +1,43 @@
+@theme {
+    --animate-highlight-up: highlight-up 1s ease-out;
+    --animate-highlight-down: highlight-down 1s ease-out;
+    --animate-in: in 0.2s ease-out;
+    --animate-out: out 0.15s ease-in forwards;
+
+    @keyframes in {
+        from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    @keyframes out {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.95) translateY(-20px);
+        }
+    }
+    @keyframes highlight-up {
+        0% {
+            background-color: rgba(255, 77, 79, 0.35);
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+    @keyframes highlight-down {
+        0% {
+            background-color: rgba(24, 144, 255, 0.35);
+        }
+        100% {
+            background-color: transparent;
+        }
+    }
+}

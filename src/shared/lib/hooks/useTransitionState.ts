@@ -9,9 +9,12 @@ export const useTransitionState = (duration?: number) => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
+    const refId = setTimeout(() => {
       setIsAppearing(true);
     }, duration ?? 0);
+    return () => {
+      clearTimeout(refId);
+    };
   }, []);
 
   return {

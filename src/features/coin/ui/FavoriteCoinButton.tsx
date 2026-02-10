@@ -21,7 +21,8 @@ const FavoriteCoinButton = ({ coinId, starClassName }: FavoriteCoinButtonProps) 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     const isToggled = toggleFavorite(coinId);
-    toasts.success(isToggled ? 'Successfully added!' : 'Successfully deleted!');
+    const message = isToggled ? `${coinId}를 즐겨찾기에 추가했습니다!` : `${coinId}를 즐겨찾기에서 제거했습니다!`;
+    toasts.success(message);
   };
 
   return (

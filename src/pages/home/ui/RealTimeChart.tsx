@@ -36,7 +36,7 @@ const ListRow = ({ coin, rank }: { coin: Coin; rank: number }) => {
         href={ROUTERS.market(coin.market)}
       >
         <div className={'flex w-6 items-center justify-center'}>
-          <FavoriteCoinButton coinId={liveCoin.market} />
+          <FavoriteCoinButton coinId={liveCoin.symbol} />
         </div>
         {/* 순위 */}
         <div className="flex w-5.5 items-center justify-center">

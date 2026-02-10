@@ -9,7 +9,6 @@ const HomeTab = () => {
       <HomeTabList />
       <Spacing size={16} />
       <CoinListFetcher>{coins => <HomeTabPannes coins={coins} />}</CoinListFetcher>
-      <Spacing size={120} />
     </Tabs>
   );
 };

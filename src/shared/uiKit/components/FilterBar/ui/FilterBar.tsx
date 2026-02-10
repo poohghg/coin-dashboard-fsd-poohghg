@@ -39,13 +39,6 @@ export const ActiveFilter = () => {
 
   return (
     <div
-      id={'active-filter-indicator'}
-      className={`pointer-events-none absolute top-0 left-0 m-[2px] rounded-[6px] bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] transition-all ease-out ${
-        isMounted ? 'duration-200' : 'opacity-0'
-      }`}
-      style={{
-        height: 'calc(100% - 4px)',
-      }}
       ref={el => {
         if (el && selectedValue) {
           const selectedButton = document.querySelector(`button[value="${selectedValue}"]`) as HTMLButtonElement;
@@ -55,6 +48,13 @@ export const ActiveFilter = () => {
             el.style.width = `${offsetWidth}px`;
           }
         }
+      }}
+      id={'active-filter-indicator'}
+      className={`pointer-events-none absolute top-0 left-0 m-[2px] rounded-[6px] bg-white shadow-[0_2px_4px_rgba(0,0,0,0.1)] transition-all ease-out ${
+        isMounted ? 'duration-200' : 'opacity-0'
+      }`}
+      style={{
+        height: 'calc(100% - 4px)',
       }}
       onTransitionEnd={() => {
         if (!isMounted) {

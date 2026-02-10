@@ -13,7 +13,7 @@ interface ChartProps {
   marketCode: string;
 }
 
-export const UpbitChart = ({ marketCode }: ChartProps) => {
+export const MarketChart = ({ marketCode }: ChartProps) => {
   const chartCommandsRef = useRef<ChartCommands>(null);
   const [timeFrame, setTimeFrame] = useState<TimeFrame>('days');
   const [legendData, setLegendData] = useState<LegendData | null>(null);

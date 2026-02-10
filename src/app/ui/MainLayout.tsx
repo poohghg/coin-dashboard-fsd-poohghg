@@ -1,3 +1,4 @@
+import { Spacing } from '@/src/shared/uiKit';
 import { MainHeader } from '@/src/widgets/MainHeader';
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
@@ -5,6 +6,7 @@ export const MainLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <MainHeader />
       <main className="min-h-[calc(100vh-var(--spacing-main-header))] w-full flex-col items-center">{children}</main>
+      <Spacing className={`safe-bottom`} size={20} />
     </>
   );
 };

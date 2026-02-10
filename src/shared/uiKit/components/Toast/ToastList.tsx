@@ -1,44 +1,62 @@
 'use client';
 
 import { useAutoClose, useTransitionState } from '@/src/shared/lib/hooks';
-import { toasts } from '@/src/shared/uiKit';
+import { cn, toasts } from '@/src/shared/uiKit';
 import { useToast } from '@/src/shared/uiKit/components/Toast/lib/useToast';
 import type { Toast, ToastType } from '@/src/shared/uiKit/components/Toast/model/type';
 import React from 'react';
 
-const toastTypeClasses: Record<ToastType, string> = {
-  success: 'bg-green-500',
-  error: 'bg-red-500',
-  warn: 'bg-yellow-500 text-black',
-  info: 'bg-gray-500',
+const toastTypeClasses: Record<ToastType, { container: string; highlight: string }> = {
+  success: {
+    container: 'border-green-200 bg-white text-green-800',
+    highlight: 'animate-[highlight-down_1s_ease-out]',
+  },
+  error: {
+    container: 'border-red-200 bg-white text-red-800',
+    highlight: 'animate-[highlight-up_1s_ease-out]',
+  },
+  warn: {
+    container: 'border-yellow-200 bg-white text-yellow-800',
+    highlight: 'animate-[highlight-up_1s_ease-out]',
+  },
+  info: {
+    container: 'border-blue-200 bg-white text-blue-800',
+    highlight: 'animate-[highlight-down_1s_ease-out]',
+  },
 };
 
 const ToastItem = ({ type, id, message, delay }: Toast) => {
-  const { isClose, isAppearing, close } = useTransitionState(100);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  const { isClose, close } = useTransitionState(100);
 
   useAutoClose(delay, close);
 
-  const baseClasses = `px-4 py-2 rounded shadow-md text-white ${toastTypeClasses[type]} transition-all duration-200 ease-in-out`;
-
-  const enterExitClasses = isClose
-    ? 'opacity-0 translate-y-[-20px]'
-    : isAppearing
-      ? 'opacity-100 translate-y-0'
-      : 'opacity-0 translate-y-[20px]';
+  const animateClasses = isClose ? 'animate-out' : 'animate-in';
 
   return (
     <div
-      className={`${baseClasses} ${enterExitClasses}`}
-      style={{
-        width: '250px',
-      }}
-      onTransitionEnd={() => {
-        if (isClose) {
-          toasts.close(id);
-        }
+      ref={ref}
+      className={cn(
+        `pointer-events-auto relative flex items-center justify-between overflow-hidden rounded-lg border px-4 py-3 shadow-lg transition-all duration-1000 ${toastTypeClasses[type].container} ${toastTypeClasses[type].highlight}`,
+        animateClasses
+      )}
+      onAnimationEnd={() => {
+        if (isClose) toasts.close(id);
       }}
     >
-      {message}
+      <div className="flex flex-col gap-1">
+        <p className="text-xs leading-none font-medium">{message}</p>
+      </div>
+      <button onClick={close} className="ml-4 opacity-50 transition-opacity hover:opacity-100">
+        <span className="sr-only">Close</span>
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div
+        className={`absolute bottom-0 left-0 h-1 w-full opacity-20 ${toastTypeClasses[type].container.split(' ')[0].replace('border', 'bg')}`}
+      />
     </div>
   );
 };

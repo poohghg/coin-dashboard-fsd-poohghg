@@ -1,1 +1,1 @@
-export { default as CoinMarketPage } from './ui/MarketPage';
+export { default as MarketPage } from './ui/MarketPage';

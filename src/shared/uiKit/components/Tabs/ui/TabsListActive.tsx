@@ -1,5 +1,6 @@
 import { MergeElementProps } from '@/src/shared/type/reactElement';
 import { useTabsContext } from '@/src/shared/uiKit/components/Tabs/Context';
+import { useEffect } from 'react';
 
 type SizeType = 'underline' | 'button';
 
@@ -20,6 +21,27 @@ const TabsListActive = ({
   }
 >) => {
   const { selectedKey } = useTabsContext();
+
+  useEffect(() => {
+    // resize 대응
+    const handleResize = () => {
+      const activeEl = document.getElementById('tabs-list-active-indicator') as HTMLDivElement;
+      if (activeEl && selectedKey) {
+        const selectedTab = document.getElementById(`tab-${selectedKey}`);
+        if (selectedTab) {
+          const rect = selectedTab.getBoundingClientRect();
+          activeEl.style.transform = `translateX(${selectedTab.offsetLeft}px)`;
+          activeEl.style.width = `${rect.width}px`;
+        }
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div
       ref={el => {
@@ -33,6 +55,7 @@ const TabsListActive = ({
           }
         }
       }}
+      id="tabs-list-active-indicator"
       className={`absolute bottom-0 left-0 w-0 rounded-[32px] opacity-0 transition-all duration-300 ${sizeStyles[type]} ${className}`}
       {...props}
     />

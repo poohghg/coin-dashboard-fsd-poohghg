@@ -25,7 +25,7 @@ class Toasts {
   }
 
   success(message: string, delay?: number) {
-    return this.open('success', `✅ ${message}`, delay);
+    return this.open('success', message, delay);
   }
 
   info(message: string, delay?: number) {

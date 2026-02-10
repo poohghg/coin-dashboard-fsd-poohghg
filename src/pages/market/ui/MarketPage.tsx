@@ -5,7 +5,7 @@ import { marketService } from '@/src/pages/market/usecase/marketService';
 import { ServerFetcher } from '@/src/shared/uiKit';
 import { notFound, redirect } from 'next/navigation';
 
-const marketPage = async ({ params }: { params: Promise<{ market: string; tab: string }> }) => {
+const MarketPage = async ({ params }: { params: Promise<{ market: string; tab: string }> }) => {
   let { market, tab } = await params;
 
   if (!tab) {
@@ -33,4 +33,4 @@ const marketPage = async ({ params }: { params: Promise<{ market: string; tab: s
   );
 };
 
-export default marketPage;
+export default MarketPage;
