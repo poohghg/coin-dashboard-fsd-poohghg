@@ -1,35 +1,32 @@
-// eslint.config.js
-import { defineConfig, globalIgnores } from 'eslint/config';
-import nextVitals from 'eslint-config-next/domain-web-vitals';
-import nextTs from 'eslint-config-next/typescript';
-import tsParser from '@typescript-eslint/parser';
-import reactPlugin from 'eslint-plugin-react';
-import hooksPlugin from 'eslint-plugin-react-hooks';
-import importPlugin from 'eslint-plugin-import';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
 import prettier from 'eslint-plugin-prettier/recommended';
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // prettier 플러그인 규칙 추가
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+});
+
+const eslintConfig = [
+  // 1. Next.js 및 TypeScript 기본 설정 로드 (Flat Config 호환 모드)
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+
+  // 2. Prettier 설정 적용
   prettier,
 
   {
+    // 3. 무시할 경로 설정
     ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
+  },
 
-    plugins: {
-      react: reactPlugin,
-      'react-hooks': hooksPlugin,
-      import: importPlugin,
-    },
-
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-      },
-    },
-
+  {
+    // 4. 상세 규칙 및 환경 설정
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     settings: {
       react: { version: 'detect' },
       'import/resolver': {
@@ -42,12 +39,11 @@ const eslintConfig = defineConfig([
         },
       },
     },
-
     rules: {
-      // prettier
+      // Prettier 관련
       'prettier/prettier': 'error',
 
-      // typescript 관련
+      // TypeScript 관련
       '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
       '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
       '@typescript-eslint/member-ordering': [
@@ -66,13 +62,13 @@ const eslintConfig = defineConfig([
         },
       ],
 
-      // react 관련
+      // React 관련
       'react/prop-types': 'off',
       'react/display-name': 'off',
       'react/react-in-jsx-scope': 'off',
       'react/no-unknown-property': ['error', { ignore: ['css'] }],
 
-      // hooks 관련
+      // Hooks 관련
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
 
@@ -86,9 +82,6 @@ const eslintConfig = defineConfig([
       'import/no-duplicates': 'error',
     },
   },
-
-  // Next.js 기본 ignore를 덮어씌우기
-  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
-]);
+];
 
 export default eslintConfig;
