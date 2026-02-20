@@ -3,6 +3,7 @@ import getViewPort from '@/src/app/head/viewport';
 import { ClientRoot } from '@/src/app/ui';
 import { ReactQueryProvider } from '@/src/shared/lib/reactQuery';
 import { ToastList } from '@/src/shared/uiKit';
+import { Analytics } from '@vercel/analytics/next';
 import { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}>
         <RootComponent>{children}</RootComponent>
+        <Analytics />
       </body>
     </html>
   );
