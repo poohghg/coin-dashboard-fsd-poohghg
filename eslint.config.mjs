@@ -4,15 +4,11 @@ import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-plugin-prettier/recommended';
 
 const eslintConfig = defineConfig([
-  // 1. Next.js Core Web Vitals 및 TypeScript 설정 로드
   ...nextVitals,
   ...nextTs,
-
-  // 2. Prettier 플러그인 규칙 추가 (항상 마지막 즈음에 위치)
   prettier,
 
   {
-    // 3. 상세 규칙 및 환경 설정
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     settings: {
       react: { version: 'detect' },

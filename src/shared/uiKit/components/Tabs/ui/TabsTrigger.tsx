@@ -6,7 +6,7 @@ import React from 'react';
 
 interface TabsTriggerProps {
   tabKey: string;
-  asChild?: boolean; // Slot 사용 여부
+  asChild?: boolean;
   className?: string;
 }
 
