@@ -6,7 +6,7 @@ import { LoadCircleIcon } from '@/src/shared/uiKit/components';
 import dynamic from 'next/dynamic';
 
 const Fallback = () => (
-  <div className="flex items-center justify-center pt-12">
+  <div className="flex items-center justify-center pt-24">
     <LoadCircleIcon />
   </div>
 );

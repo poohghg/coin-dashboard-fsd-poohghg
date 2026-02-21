@@ -1,7 +1,7 @@
 'use client';
 
 import { MergeElementProps } from '@/src/shared/type/reactElement';
-import { useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface ScrollIntoViewProps {
   children?: React.ReactNode;
@@ -13,30 +13,37 @@ export const ScrollIntoView = ({
   scrollCallback,
   ...rest
 }: MergeElementProps<'div', ScrollIntoViewProps>) => {
-  const onScrollIntoView = useCallback(
-    (el: HTMLDivElement | null) => {
-      if (!el) return;
+  const ref = useRef<HTMLDivElement>(null);
 
-      el.scrollIntoView({ behavior: 'instant', block: 'center' });
-      scrollCallback?.(el);
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'instant', block: 'center' });
+      scrollCallback?.(ref.current);
+    }
+  }, [scrollCallback]);
 
-      // const observer = new IntersectionObserver(
-      //   ([entry]) => {
-      //     if (entry.isIntersecting) {
-      //       scrollCallback?.(el);
-      //       observer.disconnect();
-      //     }
-      //   },
-      //   { threshold: 1.0 }
-      // );
-      //
-      // observer.observe(el);
-    },
-    [scrollCallback]
-  );
+  // const onScrollIntoView = useCallback(
+  //   (el: HTMLDivElement | null) => {
+  //     if (!el) return;
+  //     el.scrollIntoView({ behavior: 'instant', block: 'center' });
+  //     scrollCallback?.(el);
+  //     // const observer = new IntersectionObserver(
+  //     //   ([entry]) => {
+  //     //     if (entry.isIntersecting) {
+  //     //       scrollCallback?.(el);
+  //     //       observer.disconnect();
+  //     //     }
+  //     //   },
+  //     //   { threshold: 1.0 }
+  //     // );
+  //     //
+  //     // observer.observe(el);
+  //   },
+  //   [scrollCallback]
+  // );
 
   return (
-    <div ref={onScrollIntoView} {...rest}>
+    <div ref={ref} {...rest}>
       {children}
     </div>
   );
