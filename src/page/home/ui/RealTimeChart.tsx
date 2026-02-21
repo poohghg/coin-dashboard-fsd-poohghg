@@ -34,6 +34,7 @@ const ListRow = ({ coin, rank }: { coin: Coin; rank: number }) => {
       <Link
         className="flex h-[65px] cursor-pointer items-center rounded-2xl transition-colors duration-200 hover:bg-gray-200 hover:text-black"
         href={ROUTERS.market(coin.market)}
+        prefetch={false}
       >
         <div className={'flex w-6 items-center justify-center'}>
           <FavoriteCoinButton coinId={liveCoin.symbol} />

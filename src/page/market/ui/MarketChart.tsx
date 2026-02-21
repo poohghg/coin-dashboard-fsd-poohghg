@@ -1,29 +1,26 @@
 'use client';
 
-import { ChartTimeFrames, TimeFrame, useChartData, useLiveCandle } from '@/src/entities/candle';
-import { LegendData } from '@/src/entities/candle/model/type';
-import { CandlestickChart, ChartCommands } from '@/src/entities/candle/ui/CandlestickChart';
-import { ChartLegend } from '@/src/entities/candle/ui/ChartLegend';
+import {
+  CandlestickChart,
+  CandlestickChartCommands,
+  ChartLegend,
+  ChartTimeFrames,
+  LegendData,
+  TimeFrame,
+  useChartData,
+  useLiveCandle,
+} from '@/src/entities/candle';
 import { useCandlestickInfiniteQuery } from '@/src/page/market/query/useCandlestickInfiniteQuery';
 import { useThrottledCallback } from '@/src/shared/lib/hooks';
 import { CandlestickData, LogicalRange } from 'lightweight-charts';
 import React, { useEffect, useRef, useState } from 'react';
-
-// const CandlestickChart = dynamic(() => import('@/src/entities/candle').then(mod => mod.CandlestickChart), {
-//   ssr: false,
-//   loading: () => (
-//     <div className="flex items-center justify-center pt-20">
-//       <LoadCircleIcon />
-//     </div>
-//   ),
-// });
 
 interface ChartProps {
   marketCode: string;
 }
 
 export const MarketChart = ({ marketCode }: ChartProps) => {
-  const chartCommandsRef = useRef<ChartCommands>(null);
+  const chartCommandsRef = useRef<CandlestickChartCommands>(null);
   const [timeFrame, setTimeFrame] = useState<TimeFrame>('days');
   const [legendData, setLegendData] = useState<LegendData | null>(null);
 

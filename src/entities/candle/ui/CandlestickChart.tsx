@@ -22,13 +22,13 @@ const THEME = {
   gridColor: '#F0F0F0',
 };
 
-export interface ChartCommands {
+export interface CandlestickChartCommands {
   fitToContent: () => void;
   applyChartOptions: (options: DeepPartial<ChartOptions>) => void;
   setHeight: (callback: (chartContainer?: HTMLDivElement | null) => number | undefined) => void;
 }
 
-interface ChartEvents {
+interface CandlestickChartChartEvents {
   onCrosshairMove?: (data: CandlestickData | null) => void;
   onVisibleRangeChange?: (range: LogicalRange | null) => void;
 }
@@ -36,7 +36,7 @@ interface ChartEvents {
 interface ChartProps {
   data: CandlestickData[];
   isMinuteChart?: boolean;
-  events?: ChartEvents;
+  events?: CandlestickChartChartEvents;
   onChart?: (chart: IChartApi) => void;
   onSeries?: (series: ISeriesApi<'Candlestick'>) => void;
   onResize?: (container: HTMLDivElement | null) => { width?: number; height?: number } | undefined;
@@ -50,7 +50,7 @@ export const CandlestickChart = ({
   onSeries,
   onResize,
   chartCommandsRef,
-}: ChartProps & { chartCommandsRef?: React.Ref<ChartCommands> }) => {
+}: ChartProps & { chartCommandsRef?: React.Ref<CandlestickChartCommands> }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
