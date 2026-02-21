@@ -6,31 +6,22 @@ import { ReactNode, useMemo, useState } from 'react';
 
 interface SeeMoreListProps<T> {
   data: T[];
-  isInfiniteScroll?: boolean;
   children: (item: T[]) => ReactNode;
   pageSize?: number;
-  className?: string;
+  isInfiniteScroll?: boolean;
 }
 
-export const SeeMoreList = <T,>({
-  data,
-  pageSize = 20,
-  children,
-  isInfiniteScroll,
-  className,
-}: SeeMoreListProps<T>) => {
+export const SeeMoreList = <T,>({ data, children, pageSize = 20, isInfiniteScroll }: SeeMoreListProps<T>) => {
   const [visibleCount, setVisibleCount] = useState(pageSize);
-
   const hasMore = visibleCount < data.length;
+  const currentData = useMemo(() => data.slice(0, visibleCount), [data, visibleCount]);
 
   const handleSeeMore = () => {
     setVisibleCount(prev => prev + pageSize);
   };
 
-  const currentData = useMemo(() => data.slice(0, visibleCount), [data, visibleCount]);
-
   return (
-    <div className={className}>
+    <>
       {children(currentData)}
       {hasMore && (
         <div className={'isolate mt-4'}>
@@ -52,6 +43,6 @@ export const SeeMoreList = <T,>({
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };

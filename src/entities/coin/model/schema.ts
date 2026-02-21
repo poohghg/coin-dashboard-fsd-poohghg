@@ -84,9 +84,15 @@ export const CoinDetailSocketSchema = z.object({
   highest_52_week_date: z.string(),
   lowest_52_week_price: z.number(),
   lowest_52_week_date: z.string(),
-  market_state: z.enum(['PREVIEW', 'ACTIVE', 'DELISTED']),
+  market_state: z.enum(['PREVIEW', 'ACTIVE', 'DELISTED', 'PREDELISTING']),
   is_trading_suspended: z.boolean(),
-  delisting_date: z.string().nullable(),
+  delisting_date: z
+    .object({
+      year: z.number(),
+      month: z.number(),
+      day: z.number(),
+    })
+    .nullable(),
   market_warning: z.enum(['NONE', 'CAUTION']),
   timestamp: z.number(),
   stream_type: z.enum(['SNAPSHOT', 'REALTIME']),

@@ -90,17 +90,14 @@ const RealTimeChart = ({ coins, queryKey }: RealTimeChartProps) => {
   }
 
   const fetchedAt = new Date(coins[0]?.timestamp);
+
   return (
-    <SeeMoreList data={coins} key={queryKey} pageSize={50} isInfiniteScroll>
-      {data => (
-        <ul className="flex w-full flex-col items-center text-[13px]">
-          <ListHeader fetchAt={fetchedAt} />
-          {data.map((coin, index) => (
-            <ListRow key={coin.market} coin={coin} rank={index + 1} />
-          ))}
-        </ul>
-      )}
-    </SeeMoreList>
+    <ul className="flex w-full flex-col items-center text-[13px]">
+      <ListHeader fetchAt={fetchedAt} />
+      <SeeMoreList data={coins} key={queryKey} pageSize={50} isInfiniteScroll>
+        {data => data.map((coin, index) => <ListRow key={coin.market} coin={coin} rank={index + 1} />)}
+      </SeeMoreList>
+    </ul>
   );
 };
 

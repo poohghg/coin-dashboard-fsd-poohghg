@@ -1,9 +1,19 @@
 import { CoinDetail } from '@/src/entities/coin/model/type';
-import { MarketChart } from '@/src/page/market/ui/MarketChart';
 import { MarketTabList } from '@/src/page/market/ui/MarketTabList';
 import { OrderBookPanel } from '@/src/page/market/ui/OrderBookPanel';
 import { Spacing, Tabs, TabsPanel } from '@/src/shared/uiKit';
-import { Suspense } from 'react';
+import { LoadCircleIcon } from '@/src/shared/uiKit/components';
+import dynamic from 'next/dynamic';
+
+const Fallback = () => (
+  <div className="flex items-center justify-center pt-12">
+    <LoadCircleIcon />
+  </div>
+);
+
+const MarketChart = dynamic(() => import('@/src/page/market/ui/MarketChart').then(mod => mod.MarketChart), {
+  loading: Fallback,
+});
 
 interface MarketTabProps {
   coin: CoinDetail;
@@ -16,9 +26,7 @@ export const MarketTab = async ({ coin, defaultTab }: MarketTabProps) => {
       <MarketTabList market={coin.market} />
       <Spacing size={12} />
       <TabsPanel tabKey={'orderbook'}>
-        <Suspense>
-          <OrderBookPanel coin={coin} />
-        </Suspense>
+        <OrderBookPanel coin={coin} />
       </TabsPanel>
       <TabsPanel tabKey={'chart'}>
         <MarketChart marketCode={coin.market} />

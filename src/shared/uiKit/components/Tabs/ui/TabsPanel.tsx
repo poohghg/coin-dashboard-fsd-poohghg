@@ -1,3 +1,5 @@
+'use client';
+
 import { MergeElementProps } from '@/src/shared/type/reactElement';
 import { useTabsContext } from '@/src/shared/uiKit/components/Tabs/Context';
 import { ReactNode } from 'react';

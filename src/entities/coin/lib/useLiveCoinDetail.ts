@@ -19,6 +19,7 @@ export const useLiveCoinDetail = (code: string, initialCoin: CoinDetail): CoinDe
 
     if (!result.success) {
       if (process.env.NODE_ENV === 'development') {
+        console.log(socketData);
         console.error(`[Socket Error] ${code}:`, result.error);
       }
       return initialCoin;

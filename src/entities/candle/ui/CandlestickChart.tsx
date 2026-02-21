@@ -129,6 +129,7 @@ export const CandlestickChart = ({
     }
 
     const height = window.innerHeight - chartContainerRef.current.getBoundingClientRect().top - 20;
+    console.log(`chart height: ${height}px`);
     const chart = createChart(chartContainerRef.current, {
       width: chartContainerRef.current.clientWidth,
       height: height,

@@ -47,10 +47,7 @@ const InfiniteScrollTrigger = ({
   return (
     <>
       <If condition={isVisible}>
-        <div
-          ref={triggerRef}
-          style={{ height: '1px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        />
+        <div className={'flex h-1 w-full items-center justify-center'} ref={triggerRef} />
       </If>
       <If condition={Boolean(isLoading)}>
         <LoadCircleIcon />

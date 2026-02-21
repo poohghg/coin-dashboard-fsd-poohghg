@@ -2,7 +2,7 @@
 
 import { ChartTimeFrames, TimeFrame, useChartData, useLiveCandle } from '@/src/entities/candle';
 import { LegendData } from '@/src/entities/candle/model/type';
-import { CandlestickChart, ChartCommands } from '@/src/entities/candle/ui/CandlestickChart';
+import { ChartCommands } from '@/src/entities/candle/ui/CandlestickChart';
 import { ChartLegend } from '@/src/entities/candle/ui/ChartLegend';
 import { useCandlestickInfiniteQuery } from '@/src/page/market/query/useCandlestickInfiniteQuery';
 import { useThrottledCallback } from '@/src/shared/lib/hooks';
@@ -10,11 +10,15 @@ import { CandlestickData, LogicalRange } from 'lightweight-charts';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useRef, useState } from 'react';
 
+const CandlestickChart = dynamic(() => import('@/src/entities/candle').then(mod => mod.CandlestickChart), {
+  ssr: false,
+});
+
 interface ChartProps {
   marketCode: string;
 }
 
-const MarketChartC = ({ marketCode }: ChartProps) => {
+export const MarketChart = ({ marketCode }: ChartProps) => {
   const chartCommandsRef = useRef<ChartCommands>(null);
   const [timeFrame, setTimeFrame] = useState<TimeFrame>('days');
   const [legendData, setLegendData] = useState<LegendData | null>(null);
@@ -94,8 +98,3 @@ const MarketChartC = ({ marketCode }: ChartProps) => {
     </div>
   );
 };
-
-export const MarketChart = dynamic(() => Promise.resolve(MarketChartC), {
-  ssr: false,
-  loading: () => <div className="h-[10px] w-full bg-white" />,
-});
