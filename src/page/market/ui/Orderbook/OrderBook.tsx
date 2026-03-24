@@ -10,7 +10,7 @@ interface OrderBookProps {
   RecentTrades: React.ReactNode;
 }
 
-export const SIDE_WIDTH = '32vw';
+export const ORDERBOOK_SIDE_WIDTH = `w-[35cqw]`;
 
 export const OrderBook = ({ AskOrderBooks, BidOrderBooks, PriceInfo, RecentTrades }: OrderBookProps) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -29,14 +29,14 @@ export const OrderBook = ({ AskOrderBooks, BidOrderBooks, PriceInfo, RecentTrade
         {/* 매도 리스트 */}
         {AskOrderBooks}
         {/* 우측 정보 패널 */}
-        <div className={`relative w-[${SIDE_WIDTH}]`}>
+        <div className={`relative ${ORDERBOOK_SIDE_WIDTH}`}>
           <div className={'absolute bottom-0 left-0 w-full'}>{PriceInfo}</div>
         </div>
       </div>
       <ScrollIntoView className={'flex-shink-0 h-[1px] bg-gray-300'} scrollCallback={scrollCallback} />
       <div className="flex w-full">
         {/* 체결창 */}
-        <div className={`w-[${SIDE_WIDTH}]`}>{RecentTrades}</div>
+        <div className={`relative ${ORDERBOOK_SIDE_WIDTH} `}>{RecentTrades}</div>
         {/* 매수 리스트 */}
         {BidOrderBooks}
       </div>

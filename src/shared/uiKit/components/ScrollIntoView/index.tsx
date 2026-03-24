@@ -22,26 +22,6 @@ export const ScrollIntoView = ({
     }
   }, [scrollCallback]);
 
-  // const onScrollIntoView = useCallback(
-  //   (el: HTMLDivElement | null) => {
-  //     if (!el) return;
-  //     el.scrollIntoView({ behavior: 'instant', block: 'center' });
-  //     scrollCallback?.(el);
-  //     // const observer = new IntersectionObserver(
-  //     //   ([entry]) => {
-  //     //     if (entry.isIntersecting) {
-  //     //       scrollCallback?.(el);
-  //     //       observer.disconnect();
-  //     //     }
-  //     //   },
-  //     //   { threshold: 1.0 }
-  //     // );
-  //     //
-  //     // observer.observe(el);
-  //   },
-  //   [scrollCallback]
-  // );
-
   return (
     <div ref={ref} {...rest}>
       {children}

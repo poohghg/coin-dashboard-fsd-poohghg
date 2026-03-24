@@ -4,6 +4,7 @@ import { CoinChangeType } from '@/src/entities/coin/model/type';
 import { CoinViewModel } from '@/src/entities/coin/ui';
 import { Orderbook, useLiveOrderbook } from '@/src/entities/orderbook';
 import { TradeSide, useLiveTradeTick } from '@/src/entities/trade';
+import { ORDERBOOK_SIDE_WIDTH } from '@/src/page/market/ui/Orderbook/OrderBook';
 import { Button, cn, If } from '@/src/shared/uiKit';
 import React from 'react';
 
@@ -20,7 +21,7 @@ const OrderQuantity = ({
 }) => {
   return (
     <div
-      className={`relative flex h-full w-[32vw] items-center py-3 ${type === 'ASK' ? 'justify-end' : 'justify-start'}`}
+      className={`relative flex h-full ${ORDERBOOK_SIDE_WIDTH} items-center py-3 ${type === 'ASK' ? 'justify-end' : 'justify-start'}`}
     >
       <div className={cn('h-full rounded-[4px] opacity-50', sideColor)} style={{ width: `${barWidth}%` }} />
       <span className="absolute z-10 text-[11px] text-gray-800">{CoinViewModel.formatVolume(size)}</span>
@@ -32,20 +33,20 @@ const OrderPrice = ({
   price,
   rate,
   changeType,
-  isLastTradePrice,
+  isCurrentTradePrice,
 }: {
   price: number;
   rate: number;
   changeType: CoinChangeType;
-  isLastTradePrice: boolean;
+  isCurrentTradePrice: boolean;
 }) => {
   const color = CoinViewModel.changeColorClass(changeType);
   return (
     <Button
       className={cn(
-        'z-10 flex h-full flex-1 flex-col items-center justify-center gap-0 rounded-none border-x border-gray-300',
-        isLastTradePrice
-          ? `relative bg-white before:absolute before:inset-0 before:rounded-[8px] before:border before:border-gray-400 before:shadow-[0_2px_6px_rgba(0,0,0,0.1)]`
+        'flex h-full flex-1 flex-col items-center justify-center gap-0 rounded-none border-x border-gray-300',
+        isCurrentTradePrice
+          ? `relative isolate before:absolute before:inset-0 before:-z-10 before:rounded-[8px] before:border before:border-gray-400 before:shadow-[0_2px_6px_rgba(0,0,0,0.1)]`
           : ''
       )}
     >
@@ -78,9 +79,10 @@ const OrderBookRow = ({
   const barWidth = Math.min((unit.size / maxVol) * 100, 100);
   const changeRate = CoinViewModel.getChangeRate(unit.price, closePrice);
   const changeType = CoinViewModel.getChangeType(unit.price, closePrice);
+
   return (
     <li
-      className={`flex h-[45px] items-center justify-between ${type === `ASK` ? `hover:bg-blue-100` : `hover:bg-red-100`} hover:bg-opacity-10`}
+      className={`z-1 flex h-[45px] items-center justify-between ${type === `ASK` ? `hover:bg-blue-100` : `hover:bg-red-100`} hover:bg-opacity-10`}
     >
       <If condition={type === 'ASK'}>
         <OrderQuantity type={type} barWidth={barWidth} size={unit.size} sideColor={sideColor} />
@@ -89,7 +91,7 @@ const OrderBookRow = ({
         price={unit.price}
         rate={changeRate}
         changeType={changeType}
-        isLastTradePrice={unit.price === lastTradePrice}
+        isCurrentTradePrice={unit.price === lastTradePrice}
       />
       <If condition={type === 'BID'}>
         <OrderQuantity type={type} barWidth={barWidth} size={unit.size} sideColor={sideColor} />
@@ -108,24 +110,23 @@ interface OrderBookListProps {
 export const OrderBookList = ({ type, orderBook, prevClose, lastLiveTradePrice }: OrderBookListProps) => {
   const liveOrderbook = useLiveOrderbook(orderBook.market, orderBook);
   const { tradeTick } = useLiveTradeTick(orderBook.market);
+
   const maxVol = Math.max(...liveOrderbook.units.map(u => (type === 'ASK' ? u.askSize : u.bidSize)));
   const units = type === 'ASK' ? [...liveOrderbook.units].reverse() : liveOrderbook.units;
   const lastTradePrice = tradeTick ? tradeTick.price : lastLiveTradePrice;
 
   return (
     <ul className="flex flex-1 flex-col justify-end">
-      {units.map((u, idx) => {
-        return (
-          <OrderBookRow
-            key={type + '-' + idx + '-' + (type === 'ASK' ? u.askPrice : u.bidPrice)}
-            type={type}
-            unit={type === 'ASK' ? { price: u.askPrice, size: u.askSize } : { price: u.bidPrice, size: u.bidSize }}
-            closePrice={prevClose}
-            maxVol={maxVol}
-            lastTradePrice={lastTradePrice}
-          />
-        );
-      })}
+      {units.map((u, idx) => (
+        <OrderBookRow
+          key={type + '-' + idx + '-' + (type === 'ASK' ? u.askPrice : u.bidPrice)}
+          type={type}
+          unit={type === 'ASK' ? { price: u.askPrice, size: u.askSize } : { price: u.bidPrice, size: u.bidSize }}
+          closePrice={prevClose}
+          maxVol={maxVol}
+          lastTradePrice={lastTradePrice}
+        />
+      ))}
     </ul>
   );
 };

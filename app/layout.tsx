@@ -42,7 +42,7 @@ const RootComponent = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <ReactQueryProvider>
       <ClientRoot>
-        <div className={'relative isolate z-0 mx-auto flex max-w-[1200px] flex-col'}>{children}</div>
+        <div className={'@container relative isolate z-0 mx-auto flex max-w-[1200px] flex-col'}>{children}</div>
         <ToastList />
       </ClientRoot>
     </ReactQueryProvider>
