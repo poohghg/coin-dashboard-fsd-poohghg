@@ -1,5 +1,5 @@
 import { Coin } from '@/src/entities/coin/model/type';
-import { homeUseCase } from '@/src/page/home/usecase/homeService';
+import { homeUseCase } from '@/src/page/home/usecase/HomeService';
 import { ServerFetcher } from '@/src/shared/uiKit';
 import { ReactNode } from 'react';
 

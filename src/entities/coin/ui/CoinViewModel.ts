@@ -77,7 +77,7 @@ export class CoinViewModel {
     return `${sign}${percentage.toFixed(2)}%`;
   }
 
-  static changeColorClass(type: CoinChangeType): string {
+  static changeColorClass(type: CoinChangeType) {
     if (type === 'RISE') {
       return `text-red-500`;
     }
@@ -87,7 +87,7 @@ export class CoinViewModel {
     return `text-gray-500`;
   }
 
-  static changeAnimationClass(type: CoinChangeType): string {
+  static changeAnimationClass(type: CoinChangeType) {
     if (type === 'RISE') {
       return `animate-highlight-up`;
     }
